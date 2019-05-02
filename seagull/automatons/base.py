@@ -20,11 +20,6 @@ class Automaton(abc.ABC):
         """numpy.ndarray: Automaton layout or structure"""
         pass
 
-    @abc.abstractproperty
-    def anchors(self) -> Dict[str, Tuple[int, int]]:
-        """dict: Anchor points for different values"""
-        pass
-
     @property
     def size(self) -> Tuple[int, int]:
         """tuple: Size of the automaton"""
