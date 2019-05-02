@@ -5,9 +5,9 @@ from typing import Tuple
 
 # Import modules
 import numpy as np
-from scipy.sparse import lil_matrix
-from matplotlib.axes._subplots import AxesSubplot
 from loguru import logger
+from matplotlib.axes._subplots import AxesSubplot
+from scipy.sparse import lil_matrix
 
 from .automatons.base import Automaton
 
@@ -28,26 +28,26 @@ class Board:
         self.state = lil_matrix(size, dtype=bool)
 
     @logger.catch
-    def add(self, automaton: Automaton, anchor: str, loc: Tuple[float, float]):
+    def add(self, automaton: Automaton, loc: Tuple[float, float]):
         """Add an automaton to the board
 
         Parameters
         ----------
         automaton: seagull.Automaton
             An automaton that can evolve in the board
-        anchor : {`top`, `bottom`, `left`, `right`, `center`}
-            Anchor for placing the automaton
         loc : array_like of size 2
             Initial location of the automaton
         """
-        if automaton.anchors[anchor] is None:
-            raise ValueError("No anchor-point found in {}".format(anchor))
-
         # TODO: get the size of the automaton from its property, and use that
         # for setting the values. Some gotchas you need to consider:
         # * Cases when the size is just 1-dimensional
         # * Raise an error whenever the resulting dimension exceeds that of the
         #   board
+        pass
+
+    def clear(self):
+        """Clear the board and remove all automatons"""
+        self.state = lil_matrix(self.size, dtype=bool)
 
     def view(self) -> AxesSubplot:
         """View the current state of the board

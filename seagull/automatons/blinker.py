@@ -27,12 +27,3 @@ class Blinker(Automaton):
     def layout(self) -> np.ndarray:
         return np.ones(shape=(self.length,), dtype=int)
 
-    @property
-    def anchors(self) -> Dict[str, Tuple[int, int]]:
-        return {
-            "center": (int(np.ceil(self.layout) / 2)),
-            "left": (0, 0),
-            "right": (len(self.layout), 0),
-            "top": None,
-            "bottom": None,
-        }
