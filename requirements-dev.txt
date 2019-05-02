@@ -1,11 +1,14 @@
 alabaster==0.7.12
+ansimarkup==1.4.0
 atomicwrites==1.3.0
 attrs==19.1.0
 babel==2.6.0
+better-exceptions-fork==0.2.1.post6
 bleach==3.1.0
 bumpversion==0.5.3
 certifi==2019.3.9
 chardet==3.0.4
+colorama==0.4.1
 coverage==4.5.3
 coveralls==1.7.0
 cycler==0.10.0
@@ -17,6 +20,7 @@ idna==2.8
 imagesize==1.1.0
 jinja2==2.10.1
 kiwisolver==1.1.0
+loguru==0.2.5
 markupsafe==1.1.1
 matplotlib==3.0.3
 mccabe==0.6.1
