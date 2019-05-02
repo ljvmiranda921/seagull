@@ -9,6 +9,7 @@ from typing import Dict, Tuple, Union
 
 # Import modules
 import numpy as np
+from matplotlib.axes._subplots import AxesSubplot
 
 
 class Automaton(abc.ABC):
@@ -28,3 +29,13 @@ class Automaton(abc.ABC):
     def size(self) -> Tuple[int, int]:
         """tuple: Size of the automaton"""
         return self.layout.shape
+
+    def view(self) -> AxesSubplot:
+        """View the automaton
+
+        Returns
+        -------
+        matplotlib.axes._subplots.AxesSubplot
+            Graphical view of the automaton
+        """
+        pass
