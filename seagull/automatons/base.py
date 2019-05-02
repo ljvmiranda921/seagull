@@ -21,7 +21,7 @@ class Automaton(abc.ABC):
         pass
 
     @abc.abstractproperty
-    def anchor(self) -> Dict[str, tuple]:
+    def anchors(self) -> Dict[str, Tuple[int, int]]:
         """dict: Anchor points for different values"""
         pass
 
