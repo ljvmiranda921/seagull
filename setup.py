@@ -18,7 +18,7 @@ test_requirements = [
 ]
 
 setup(
-    name="Seagull",
+    name="pyseagull",
     version="1.0.0-alpha.1",
     description="Python library for simulating Conway's Game of Life",
     long_description=readme,
