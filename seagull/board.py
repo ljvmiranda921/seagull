@@ -43,7 +43,8 @@ class Board:
             height, width = lifeform.size
             self.state[row : row + height, col : col + width] = lifeform.layout
         except ValueError:
-            logger.exception("Lifeform is out-of-bounds!")
+            logger.error("Lifeform is out-of-bounds!")
+            raise
 
     def clear(self):
         """Clear the board and remove all lifeforms"""
