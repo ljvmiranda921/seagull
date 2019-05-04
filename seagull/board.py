@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
 # Import standard library
-from typing import Tuple
+from typing import Tuple, Union
 
 # Import modules
 import numpy as np
 from loguru import logger
-from matplotlib.axes._subplots import AxesSubplot
+from matplotlib.axes._subplots import (Axes, Subplot)
 from scipy.sparse import lil_matrix
 
-from .automatons.base import Automaton
+from .lifeforms.base import Lifeform
 
 
 class Board:
-    """Represents the environment where the automatons can grow and evolve"""
+    """Represents the environment where the lifeforms can grow and evolve"""
 
     def __init__(self, size=(100, 100)):
         """Initialize the class
@@ -28,17 +28,17 @@ class Board:
         self.state = lil_matrix(size, dtype=bool)
 
     @logger.catch
-    def add(self, automaton: Automaton, loc: Tuple[float, float]):
-        """Add an automaton to the board
+    def add(self, lifeform: Lifeform, loc: Tuple[float, float]):
+        """Add a lifeform to the board
 
         Parameters
         ----------
-        automaton: seagull.Automaton
-            An automaton that can evolve in the board
+        lifeform: seagull.Lifeform
+            A lifeform that can evolve in the board
         loc : array_like of size 2
-            Initial location of the automaton
+            Initial location of the lifeform
         """
-        # TODO: get the size of the automaton from its property, and use that
+        # TODO: get the size of the lifeform from its property, and use that
         # for setting the values. Some gotchas you need to consider:
         # * Cases when the size is just 1-dimensional
         # * Raise an error whenever the resulting dimension exceeds that of the
@@ -46,10 +46,10 @@ class Board:
         pass
 
     def clear(self):
-        """Clear the board and remove all automatons"""
+        """Clear the board and remove all lifeforms"""
         self.state = lil_matrix(self.size, dtype=bool)
 
-    def view(self) -> AxesSubplot:
+    def view(self) -> Union[Axes, Subplot]:
         """View the current state of the board
 
         Returns
