@@ -25,5 +25,4 @@ class Blinker(Lifeform):
 
     @property
     def layout(self) -> np.ndarray:
-        return np.ones(shape=(self.length,), dtype=int)
-
+        return np.ones(shape=(self.length, 1), dtype=int)

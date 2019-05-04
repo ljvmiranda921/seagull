@@ -9,7 +9,7 @@ from typing import Dict, Tuple, Union
 
 # Import modules
 import numpy as np
-from matplotlib.axes._subplots import (Axes, Subplot)
+from matplotlib.axes._subplots import Axes, Subplot
 
 
 class Lifeform(abc.ABC):
