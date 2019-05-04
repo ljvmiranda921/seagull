@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Import standard library
-from typing import Dict, Tuple
-
 # Import modules
 import numpy as np
 
@@ -26,3 +23,15 @@ class Blinker(Lifeform):
     @property
     def layout(self) -> np.ndarray:
         return np.ones(shape=(self.length, 1), dtype=int)
+
+
+class Toad(Lifeform):
+    """A Toad lifeform oscillator"""
+
+    def __init__(self):
+        """Initialize the class"""
+        super(Toad, self).__init__()
+
+    @property
+    def layout(self) -> np.ndarray:
+        return np.array([[1, 1, 1, 0], [0, 1, 1, 1]])

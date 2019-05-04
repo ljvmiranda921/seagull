@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .blinker import Blinker
+from .oscillators import Blinker, Toad
 
-__all__ = ["Blinker"]
+__all__ = ["Blinker", "Toad"]
