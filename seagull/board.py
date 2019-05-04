@@ -4,10 +4,10 @@
 from typing import Tuple
 
 # Import modules
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 from matplotlib.image import AxesImage
-from scipy.sparse import lil_matrix
 
 from .lifeforms.base import Lifeform
 
@@ -25,7 +25,7 @@ class Board:
 
         """
         self.size = size
-        self.state = lil_matrix(size, dtype=bool)
+        self.state = np.zeros(size, dtype=bool)
 
     def add(self, lifeform: Lifeform, loc: Tuple[int, int]):
         """Add a lifeform to the board
@@ -43,22 +43,23 @@ class Board:
 
     def clear(self):
         """Clear the board and remove all lifeforms"""
-        self.state = lil_matrix(self.size, dtype=bool)
+        self.state = np.zeros(self.size, dtype=bool)
 
-    def view(self, figsize=(5, 5)) -> AxesImage:
+    def view(self, figsize=(5, 5)) -> Tuple[Figure, AxesImage]:
         """View the current state of the board
+
+        Parameters
+        ----------
+        figsize : tuple
+            Size of the output figure
 
         Returns
         -------
-        matplotlib.image.AxesImage
+        (matplotlib.figure.Figure, matplotlib.image.AxesImage)
             Graphical view of the board
-        figsize : tuple
-            Size of the output figure
         """
         fig = plt.figure(figsize=figsize)
         ax = fig.add_axes([0, 0, 1, 1], xticks=[], yticks=[], frameon=False)
-        im = ax.imshow(
-            self.state.toarray(), cmap=plt.cm.binary, interpolation="nearest"
-        )
+        im = ax.imshow(self.state, cmap=plt.cm.binary, interpolation="nearest")
         im.set_clim(-0.05, 1)
-        return im
+        return fig, im
