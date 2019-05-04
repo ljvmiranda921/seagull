@@ -5,6 +5,7 @@ from .oscillators import Blinker, Toad, Pulsar
 from .gliders import Glider
 from .growers import Unbounded
 from .random import RandomBox
+from .custom import Custom
 
 __all__ = [
     "Box",
@@ -17,4 +18,5 @@ __all__ = [
     "Glider",
     "Unbounded",
     "RandomBox",
+    "Custom",
 ]
