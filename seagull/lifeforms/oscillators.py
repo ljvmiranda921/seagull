@@ -35,3 +35,21 @@ class Toad(Lifeform):
     @property
     def layout(self) -> np.ndarray:
         return np.array([[1, 1, 1, 0], [0, 1, 1, 1]])
+
+
+class Pulsar(Lifeform):
+    """A Pulsar lifeform oscillator"""
+
+    def __init__(self):
+        """Initialize the class"""
+        super(Pulsar, self).__init__()
+
+    @property
+    def layout(self) -> np.ndarray:
+        X = np.zeros((17, 17))
+        X[2, 4:7] = 1
+        X[4:7, 7] = 1
+        X += X.T
+        X += X[:, ::-1]
+        X += X[::-1, :]
+        return X

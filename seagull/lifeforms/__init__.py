@@ -1,5 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from .oscillators import Blinker, Toad
+from .static import Box, Seed, Moon, Kite
+from .oscillators import Blinker, Toad, Pulsar
+from .gliders import Glider
+from .growers import Unbounded
+from .random import RandomBox
 
-__all__ = ["Blinker", "Toad"]
+__all__ = [
+    "Box",
+    "Seed",
+    "Moon",
+    "Kite",
+    "Blinker",
+    "Toad",
+    "Pulsar",
+    "Glider",
+    "Unbounded",
+    "RandomBox",
+]
