@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.image import AxesImage
+from loguru import logger
 
 from .lifeforms.base import Lifeform
 
@@ -37,12 +38,16 @@ class Board:
         loc : array_like of size 2
             Initial location of the lifeform on the board
         """
-        row, col = loc
-        height, width = lifeform.size
-        self.state[row : row + height, col : col + width] = lifeform.layout
+        try:
+            row, col = loc
+            height, width = lifeform.size
+            self.state[row : row + height, col : col + width] = lifeform.layout
+        except ValueError:
+            logger.exception("Lifeform is out-of-bounds!")
 
     def clear(self):
         """Clear the board and remove all lifeforms"""
+        logger.debug("Board cleared!")
         self.state = np.zeros(self.size, dtype=bool)
 
     def view(self, figsize=(5, 5)) -> Tuple[Figure, AxesImage]:
