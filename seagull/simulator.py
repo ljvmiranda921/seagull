@@ -23,8 +23,8 @@ class Simulator:
             The board to run the simulation on
         """
         self.board = board
-        self.history = []
-        self.stats = {}
+        self.history = []  # type: list
+        self.stats = {}    # type: dict
 
     def run(self, rule: Callable, iters: int) -> dict:
         """Run the simulation for a given number of iterations
@@ -57,8 +57,6 @@ class Simulator:
         ----------
         history : list or numpy.ndarray
             The simulation history
-        stats : dict
-
 
         Returns
         -------
