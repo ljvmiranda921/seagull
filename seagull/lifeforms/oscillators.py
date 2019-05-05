@@ -9,13 +9,13 @@ from .base import Lifeform
 class Blinker(Lifeform):
     """A horizontal Blinker lifeform"""
 
-    def __init__(self, length: int):
+    def __init__(self, length=3):
         """Initialize the class
 
         Parameters
         ----------
         length : int
-            Length of the blinker
+            Length of the blinker. Default is 3
         """
         super(Blinker, self).__init__()
         self.length = length
