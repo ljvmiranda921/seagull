@@ -12,7 +12,7 @@ from .base import Lifeform
 class RandomBox(Lifeform):
     """A random box with arbitrarily-set shape"""
 
-    def __init__(self, shape: Tuple[int, int], seed=None):
+    def __init__(self, shape=(3, 3), seed=None):
         """Initialize the class
 
         Parameters
