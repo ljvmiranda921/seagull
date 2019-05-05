@@ -21,7 +21,7 @@ class Box(Lifeform):
 class Seed(Lifeform):
     """A static Seed"""
 
-    def __init__(self, length: int):
+    def __init__(self):
         """Initialize the class"""
         super(Seed, self).__init__()
 
