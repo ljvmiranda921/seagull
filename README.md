@@ -93,17 +93,17 @@ board = sg.Board(size=(30,30))
 board.add(Custom([[0,1,1,0], [0,0,1,1]]))
 ```
 
-### Obtaining simulation history
+### Obtaining simulation statistics and history 
 
-By default, the simulation history will always be returned after calling the
+By default, the simulation statistics will always be returned after calling the
 `run()` method. In addition, you can also obtain the history by calling the
 `get_history()` method.
 
 ```python
-# The run() command already returns the history
-hist = sim.run(sg.rules.conway_classic, iters=1000)
+# The run() command returns the run statistics
+stats = sim.run(sg.rules.conway_classic, iters=1000)
 # You can also get it using get_history()
-sim.get_history()
+hist = sim.get_history()
 ```
 
 ## Contributing
