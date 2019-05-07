@@ -3,28 +3,41 @@
 A Python library for Conway's Game of Life
 
 This framework allows you to create and simulate various artificial lifeforms
-and cellular automatons easily: simply define your board, add your lifeforms,
-and execute the `run()` command! It also provides a myriad of pre-made
-lifeforms while allowing you to create your custom ones.
+and cellular automata easily: simply define your board, add your lifeforms,
+and execute the `run` command! It also provides a myriad of pre-made
+lifeforms while allowing you to create your own.
 
 **Why name it Seagull?** Conway's Game of Life is quite a mouthful, so I just refer to
 its acronym, CGoL. The word "seagull" is just a pun of that.
 
-Simulate your first artificial life in less than 10 lines of code:
+Simulate your first lifeforms in few lines of code:
 
 ```python
 import seagull as sg
 from seagull.lifeforms import Pulsar
 
-board = sg.Board(size=(20,20))
-board.add(Pulsar(), loc=(1,1))
+# Initialize board
+board = sg.Board(size=(19,60))  
 
-sim = sg.Simulator(board)
+# Add three Pulsar lifeforms in various locations
+board.add(Pulsar(), loc=(1,1))
+board.add(Pulsar(), loc=(1,22))
+board.add(Pulsar(), loc=(1,42))
+
+# Simulate board
+sim = sg.Simulator(board)      
 sim.run(sg.rules.conway_classic, iters=1000)
-sim.animate()  
 ```
 
-We have a nice collection of lifeforms for you to choose from!
+Optionally, you can animate the simulation by running `sim.animate()`:
+
+<p align="center">
+  <img src="https://imgur.com/sgCrP9f.gif" width="720">
+</p>
+
+Aside from `Pulsar`, we have a nice collection of lifeforms for you to choose
+from!
+
 
 ## Installation
 
@@ -55,11 +68,11 @@ python setup.py install
 There are three main components for an artificial life simulation:
 
 * The `Board` or the environment in which the lifeforms will move around
-* The `lifeforms` that will interact with the environment, and  
-* The `rules` that will dictate if a particular cell will survive or not
+* The `Lifeform` that will interact with the environment, and  
+* The `rules` that dictate if a particular cell will survive or not
 
-In Seagull, you simply define your board, add your lifeforms, and run the
-simulation given a rule. You can add multiple lifeforms as you want:
+In Seagull, you simply define your `Board`, add your `Lifeform`/s, and run the
+`Simulator` given a `rule`. You can add multiple lifeforms as you want:
 
 ```python
 import seagull as sg
