@@ -14,10 +14,10 @@ Simulate your first artificial life in less than 10 lines of code:
 
 ```python
 import seagull as sg
-from seagull.lifeforms import Blinker
+from seagull.lifeforms import Pulsar
 
-board = sg.Board(size=(10,10))
-board.add(Blinker(length=3), loc=(4,4))
+board = sg.Board(size=(20,20))
+board.add(Pulsar(), loc=(1,1))
 
 sim = sg.Simulator(board)
 sim.run(sg.rules.conway_classic, iters=1000)
