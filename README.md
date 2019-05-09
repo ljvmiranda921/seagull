@@ -33,7 +33,7 @@ Optionally, you can animate the simulation by running `sim.animate()`:
 
 <p align="center">
   <img src="https://imgur.com/sgCrP9f.gif" width="720">
- </p>
+</p>
 
 Aside from `Pulsar`, we have a nice collection of lifeforms for you to choose
 from!
