@@ -4,8 +4,8 @@
 from inspect import getmembers, isclass
 
 # Import modules
-import pytest
 import numpy as np
+import pytest
 
 # Import from package
 import seagull as sg
@@ -21,6 +21,13 @@ all_lifeforms = [
 def test_lifeform_size(lifeform, cls):
     """Test if getting the lifeform size returns a tuple of size 2"""
     assert len(cls().size) == 2
+
+
+@pytest.mark.parametrize("lifeform, cls", all_lifeforms)
+def test_lifeform_layout(lifeform, cls):
+    """Test if getting the lifeform layout returns a numpy array"""
+    assert isinstance(cls().layout, np.ndarray)
+    assert len(cls().layout.shape) == 2
 
 
 def test_custom_validate_input_values():
