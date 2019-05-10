@@ -33,6 +33,9 @@ jobs:
   - script: tox -e py
     displayName: 'Run Tox'
 
+  - script: codecov -t $(CODECOV_TOKEN)
+    displayName: 'Upload coverage report to codecov'
+
   - task: PublishTestResults@2
     inputs:
       testResultsFiles: '**/test-results.xml'
