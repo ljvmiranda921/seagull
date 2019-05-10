@@ -1,5 +1,11 @@
 # Seagull
 
+
+![PyPI](https://img.shields.io/pypi/v/pyseagull.svg?color=brightgreen&logo=python&logoColor=white)
+[![Build Status](https://dev.azure.com/ljvmiranda/ljvmiranda/_apis/build/status/ljvmiranda921.seagull?branchName=master)](https://dev.azure.com/ljvmiranda/ljvmiranda/_build/latest?definitionId=3&branchName=master)
+![GitHub](https://img.shields.io/github/license/ljvmiranda921/seagull.svg?color=blue)
+
+
 A Python library for Conway's Game of Life
 
 This framework allows you to create and simulate various artificial lifeforms
