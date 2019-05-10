@@ -14,4 +14,4 @@ sphinx_rtd_theme
 sphinxcontrib-napoleon
 # Deployment
 twine
-
+wheel
