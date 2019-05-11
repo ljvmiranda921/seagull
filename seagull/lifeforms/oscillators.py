@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+"""Oscillators are lifeforms that returns to its initial configuration after
+some time"""
+
 # Import modules
 import numpy as np
 

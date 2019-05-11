@@ -1,5 +1,27 @@
 # -*- coding: utf-8 -*-
 
+"""The Custom lifeform allows you to easily pass any arbitrary array as a
+:obj:`seagull.lifeforms.base.Lifeform` to the Board. However, it is important
+that the array passes two conditions:
+
+    * It must be a 2-dimensional array. For lines such as Blinkers, we often use an array of shape :code:`(2, 1)`.
+    * It must be a binary array where :code:`True` represents active cells and :code:`False` for inactive cells. You can also use 0s and 1s as input.
+
+If any of these conditions aren't fulfilled, then Seagull will raise a
+:code:`ValueError`
+
+Here's an example in creating a custom lifeform:
+
+    .. code-block:: python
+
+        import seagull as sg
+        from seagull.lifeforms import Custom
+
+        board = sg.Board(size=(30,30))
+        board.add(Custom([[0,1,1,0], [0,0,1,1]]))
+
+"""
+
 # Import standard library
 from typing import Union
 

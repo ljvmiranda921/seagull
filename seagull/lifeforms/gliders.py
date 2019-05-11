@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Gliders are lifeforms that oscillate but move while oscillating"""
+
 # Import modules
 import numpy as np
 
