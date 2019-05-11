@@ -43,9 +43,9 @@ Optionally, you can animate the simulation by running `sim.animate()`:
   <img src="https://imgur.com/sgCrP9f.gif" width="720">
 </p>
 
-Aside from `Pulsar`, we have a nice collection of lifeforms for you to choose
-from!
-
+Aside from `Pulsar`, we have a [nice collection of
+lifeforms](https://pyseagull.readthedocs.io/en/latest/api/seagull.lifeforms.html)
+for you to choose from!
 
 ## Installation
 
