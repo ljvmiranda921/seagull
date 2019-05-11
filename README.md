@@ -3,6 +3,7 @@
 
 ![PyPI](https://img.shields.io/pypi/v/pyseagull.svg?color=brightgreen&logo=python&logoColor=white)
 [![Build Status](https://dev.azure.com/ljvmiranda/ljvmiranda/_apis/build/status/ljvmiranda921.seagull?branchName=master)](https://dev.azure.com/ljvmiranda/ljvmiranda/_build/latest?definitionId=3&branchName=master)
+[![Documentation Status](https://readthedocs.org/projects/pyseagull/badge/?version=latest)](https://pyseagull.readthedocs.io/en/latest/?badge=latest)
 [![codecov](https://codecov.io/gh/ljvmiranda921/seagull/branch/master/graph/badge.svg)](https://codecov.io/gh/ljvmiranda921/seagull)
 ![GitHub](https://img.shields.io/github/license/ljvmiranda921/seagull.svg?color=blue)
 
