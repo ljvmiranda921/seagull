@@ -11,8 +11,8 @@ mypy
 tox
 # Documentation
 Sphinx==1.7.6
-sphinx_rtd_theme
 sphinxcontrib-napoleon
+sphinx-autodoc-typehints
 # Deployment
 twine
 wheel
