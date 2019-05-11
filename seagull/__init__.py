@@ -8,6 +8,6 @@ from .rules import *
 
 __all__ = ["Board", "Simulator", "rules"]
 
-__version__ = "1.0.0-alpha.1"
+__version__ = "1.0.0-beta.0"
 __author__ = "Lester James V. Miranda"
 __email__ = "ljvmiranda@gmail.com"
