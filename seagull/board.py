@@ -1,5 +1,33 @@
 # -*- coding: utf-8 -*-
 
+"""The Board represents the environment where lifeforms can evolve, you can
+initialize a Board by passing a tuple representing its size:
+
+.. code-block:: python
+
+    import seagull as sg
+    board = sg.Board(size=(30, 30))  # default is (100, 100)
+
+You can add lifeforms to the board by using the :code:`add()` command. You
+should pass an instance of the lifeform and its location on the board. The
+`loc` parameter is anchored at the top-left for two-dimensional lifeforms and
+to the left for one-dimensional lifeforms. It follows numpy's `indexing
+convention <https://docs.scipy.org/doc/numpy/reference/arrays.indexing.html>`_
+
+Whenever a lifeform's size exceeds the edge of the board, then Seagull throws a
+:code:`ValueError`:
+
+.. code-block:: python
+
+    import seagull as sg
+    board = sg.Board()
+    board.add(sg.lifeforms.Blinker(length=3), loc=(0,0))
+
+You can always view the board's state by calling the :code:`view()` method.
+Lastly, you can clear the board with the :code:`clear()` command.
+
+"""
+
 # Import standard library
 from typing import Tuple
 
@@ -33,7 +61,7 @@ class Board:
 
         Parameters
         ----------
-        lifeform: seagull.Lifeform
+        lifeform: :obj:`seagull.lifeforms.base.Lifeform`
             A lifeform that can evolve in the board
         loc : array_like of size 2
             Initial location of the lifeform on the board
@@ -61,7 +89,7 @@ class Board:
 
         Returns
         -------
-        (matplotlib.figure.Figure, matplotlib.image.AxesImage)
+        (:obj:`matplotlib.figure.Figure`, :obj:`matplotlib.image.AxesImage`)
             Graphical view of the board
         """
         fig = plt.figure(figsize=figsize)
