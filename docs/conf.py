@@ -93,7 +93,7 @@ html_theme = "alabaster"
 #
 html_theme_options = {
     "description": "A Python library for Conway's Game of Life",
-    "github_banner" : True,
+    "github_banner": True,
     "github_button": True,
     "github_repo": "seagull",
     "github_user": "ljvmiranda921",
@@ -183,4 +183,9 @@ texinfo_documents = [
 # -- Options for intersphinx extension ---------------------------------------
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {"https://docs.python.org/": None}
+intersphinx_mapping = {
+    "https://docs.python.org/": None,
+    "http://matplotlib.org": None,
+    "http://docs.scipy.org/doc/numpy/": None,
+    "https://docs.scipy.org/doc/scipy/reference": None,
+}
