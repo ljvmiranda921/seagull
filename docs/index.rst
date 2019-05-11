@@ -37,6 +37,11 @@ its acronym, CGoL. The word "seagull" is just a pun of that.
 - **Free Software**: MIT License
 - **Github Repository**: https://github.com/ljvmiranda921/seagull
 
+`Conway's Game of Life
+<https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`_ is considered a
+zero-player game: you simply set-up your initial configuration on the board and
+observe how it evolves through time.
+
 Simulate your first lifeforms in a few lines of code:
 
 .. code-block:: python
