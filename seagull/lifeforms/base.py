@@ -9,7 +9,9 @@ from typing import Dict, Tuple, Union
 
 # Import modules
 import numpy as np
-from matplotlib.axes._subplots import Axes, Subplot
+import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
+from matplotlib.image import AxesImage
 
 
 class Lifeform(abc.ABC):
@@ -25,7 +27,7 @@ class Lifeform(abc.ABC):
         """tuple: Size of the lifeform"""
         return self.layout.shape
 
-    def view(self) -> Union[Axes, Subplot]:
+    def view(self, figsize=(5, 5)) -> Tuple[Figure, AxesImage]:
         """View the lifeform
 
 
@@ -34,4 +36,9 @@ class Lifeform(abc.ABC):
         matplotlib.axes._subplots.AxesSubplot
             Graphical view of the lifeform
         """
-        pass
+        fig = plt.figure(figsize=figsize)
+        ax = fig.add_axes([0, 0, 1, 1], xticks=[], yticks=[], frameon=False)
+        im = ax.imshow(self.layout, cmap=plt.cm.binary, interpolation="nearest")
+        im.set_clim(-0.05, 1)
+        return fig, im
+
