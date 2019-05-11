@@ -20,33 +20,53 @@ Custom
    :undoc-members:
    :special-members: __init__
 
+All Lifeforms
+-------------
+
+This section contains all lifeforms currently implemented in the library.
+It is not yet comprehensive, so it would be really nice if you can help me add
+more!
+
 
 Gliders
--------
+~~~~~~~
 
 .. automodule:: seagull.lifeforms.gliders
-   :members:
+.. autosummary::
+   seagull.lifeforms.gliders.Glider
 
 Growers
--------
+~~~~~~~
 
 .. automodule:: seagull.lifeforms.growers
-   :members:
+.. autosummary::
+   seagull.lifeforms.growers.Unbounded
+   
 
 Oscillators
------------
+~~~~~~~~~~~
 
 .. automodule:: seagull.lifeforms.oscillators
-   :members:
+.. autosummary::
+   seagull.lifeforms.oscillators.Blinker
+   seagull.lifeforms.oscillators.Toad
+   seagull.lifeforms.oscillators.Pulsar
 
 Random
-------
+~~~~~~
 
 .. automodule:: seagull.lifeforms.random
-   :members:
+.. autosummary::
+   seagull.lifeforms.random.RandomBox
 
 Static
-------
+~~~~~~
 
 .. automodule:: seagull.lifeforms.static
-   :members:
+.. autosummary::
+   seagull.lifeforms.static.Box
+   seagull.lifeforms.static.Seed
+   seagull.lifeforms.static.Moon
+   seagull.lifeforms.static.Kite
+
+
