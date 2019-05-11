@@ -102,7 +102,7 @@ Then you can simply run the simulation, and animate it when needed:
 
 ```python
 sim = sg.Simulator(board)
-hist = sim.run(sg.rules_conway_classic, iters=1000)  # Save simulation history
+hist = sim.run(sg.rules.conway_classic, iters=1000)  # Save simulation history
 sim.animate()
 ```
 
