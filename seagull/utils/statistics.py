@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Statistics contain various computations to characterize a board state"""
+
 import numpy as np
 
 
@@ -8,7 +10,7 @@ def shannon_entropy(state: np.ndarray) -> float:
 
     Parameters
     ----------
-    state : np.ndarray
+    state : :obj:`numpy.ndarray`
         The board state to compute statistics from
 
     Returns
@@ -26,7 +28,7 @@ def cell_coverage(state: np.ndarray) -> float:
 
     Parameters
     ----------
-    state : np.ndarray
+    state : :obj:`numpy.ndarray`
         The board state to compute statistics from
 
     Returns
