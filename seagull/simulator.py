@@ -1,5 +1,51 @@
 # -*- coding: utf-8 -*-
 
+"""The Simulator takes in a :obj:`seagull.Board`, and runs a simulation given a
+set number of iterations and a rule. For each iteration, the rule is applied to
+the Board in order to evolve the lifeforms. After the simulation, run
+statistics are returned.
+
+.. code-block:: python
+
+    import seagull as sg
+
+    board = sg.Board()
+    board.add(Blinker(), loc=(0,0))
+
+    # Initialize a simulator
+    sim = sg.Simulator(board)
+    stats = sim.run(sg.rules.conway_classic, iters=1000)
+
+Various statistics such as entropy, peak cell coverage, and the like are
+returned as a dictionary. This gives us an idea on the characteristics of the
+simulation experiment.
+
+.. note::
+
+    Some statistics are highly-dependent on the size of the board and the
+    number of iterations. For example, peak cell coverage (pertaining to the
+    max. amount of active cells during the whole run) depends on board size. If
+    you have better ideas for computing these statistics, please open-up an
+    Issue!
+
+The :code:`run()` method only computes the progress of the board for the whole
+simulation, but it does not animate it yet. To create an animation, call the
+:code:`animate()` method:
+
+.. code-block:: python
+
+    sim.animate()
+
+
+This returns a :obj:`matplotlib.animation.FuncAnimation` that you can turn into
+an interactive animation in your notebook or exported as a GIF.
+
+.. note::
+
+    When exporting to GIF, it is required to have the ffmpeg backend installed.
+
+"""
+
 # Import standard library
 from typing import Callable, Union
 
