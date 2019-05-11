@@ -32,7 +32,7 @@ setup(
     tests_require=test_requirements,
     license="MIT license",
     zip_safe=False,
-    keywords=["osm", "conway game of life" "mathematics", "cellular automata"],
+    keywords=["conway game of life" "mathematics", "cellular automata"],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
