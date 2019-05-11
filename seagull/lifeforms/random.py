@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Random lifeforms are generated on-the-fly without specific configuration"""
+
 # Import standard library
 from typing import Tuple
 

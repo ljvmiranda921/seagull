@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Growers are lifeforms that exhibit asymptotically unbounded growth"""
+
 # Import modules
 import numpy as np
 

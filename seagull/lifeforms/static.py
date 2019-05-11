@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+"""Static lifeforms do not oscillate nor move given classic Conway rules"""
+
 # Import modules
 import numpy as np
 
