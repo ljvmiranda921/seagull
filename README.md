@@ -1,11 +1,15 @@
-# Seagull
+<p align="center">
+    <img src="https://imgur.com/Vgt6a5y.png" width="200">
+</p>
 
+<p align="center">
+    <a href="https://pypi.org/project/pyseagull/"><img src="https://img.shields.io/pypi/v/pyseagull.svg?color=brightgreen&logo=python&logoColor=white"></img></a>
+    <a href="https://dev.azure.com/ljvmiranda/ljvmiranda/_build/latest?definitionId=3&branchName=master"><img src="https://dev.azure.com/ljvmiranda/ljvmiranda/_apis/build/status/ljvmiranda921.seagull?branchName=master"></img></a>
+    <a href="https://pyseagull.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/pyseagull/badge/?version=latest"></img></a>
+    <a href="https://codecov.io/gh/ljvmiranda921/seagull"><img src="https://codecov.io/gh/ljvmiranda921/seagull/branch/master/graph/badge.svg"></img></a>
+    <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/ljvmiranda921/seagull.svg?color=blue"></img></a>
+</p>
 
-![PyPI](https://img.shields.io/pypi/v/pyseagull.svg?color=brightgreen&logo=python&logoColor=white)
-[![Build Status](https://dev.azure.com/ljvmiranda/ljvmiranda/_apis/build/status/ljvmiranda921.seagull?branchName=master)](https://dev.azure.com/ljvmiranda/ljvmiranda/_build/latest?definitionId=3&branchName=master)
-[![Documentation Status](https://readthedocs.org/projects/pyseagull/badge/?version=latest)](https://pyseagull.readthedocs.io/en/latest/?badge=latest)
-[![codecov](https://codecov.io/gh/ljvmiranda921/seagull/branch/master/graph/badge.svg)](https://codecov.io/gh/ljvmiranda921/seagull)
-![GitHub](https://img.shields.io/github/license/ljvmiranda921/seagull.svg?color=blue)
 
 
 A Python library for Conway's Game of Life
