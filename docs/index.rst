@@ -75,6 +75,7 @@ Optionally, you can animate the simulation by running :code:`sim.animate()`:
    installation
    usage
    changelog
+   examples
 
 .. toctree::
    :hidden:
