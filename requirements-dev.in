@@ -11,5 +11,10 @@ tox
 Sphinx==1.7.6
 sphinxcontrib-napoleon
 sphinx-autodoc-typehints
+# Jupyter notebook examples
+nbsphinx
+ipython
+ipykernel
+nbstripout
 # Deployment
 twine
