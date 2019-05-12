@@ -99,7 +99,7 @@ html_theme_options = {
     "github_button": True,
     "github_repo": "seagull",
     "github_user": "ljvmiranda921",
-    "code_font_family": "Fira Mono",
+    "github_type": "star"
 }
 
 
