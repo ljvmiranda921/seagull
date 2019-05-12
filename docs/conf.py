@@ -41,6 +41,7 @@ release = seagull.__version__
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    "nbsphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
@@ -75,7 +76,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -99,8 +100,11 @@ html_theme_options = {
     "github_button": True,
     "github_repo": "seagull",
     "github_user": "ljvmiranda921",
-    "github_type": "star"
+    "github_type": "star",
 }
+
+# Set the timeout for executing notebooks to three minutes
+nbsphinx_timeout = 180
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
