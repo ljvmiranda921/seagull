@@ -27,7 +27,7 @@ Then you can simply run the simulation, and animate it when needed:
 .. code-block:: python
 
    sim = sg.Simulator(board)
-   stats = sim.run(sg.rules_conway_classic, iters=1000)
+   stats = sim.run(sg.rules.conway_classic, iters=1000)
    sim.animate()
 
 Adding custom lifeforms
