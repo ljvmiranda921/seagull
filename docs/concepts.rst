@@ -1,5 +1,5 @@
-Basic Usage
-===========
+Concepts
+========
 
 There are three main components for an artificial life simulation:
 
@@ -7,8 +7,18 @@ There are three main components for an artificial life simulation:
 * The :code:`Lifeform` that will interact with the environment, and  
 * The :code:`rules` that dictate if a particular cell will survive or not
 
-In Seagull, you simply define your :code:`Board`, add your :code:`Lifeform`/s, and run the
-:code:`Simulator` given a :code:`rule`. You can add multiple lifeforms as you want:
+In the classic Conway's Game of Life, there are four rules (taken from
+`@jakevdp <https://twitter.com/jakevdp>`_'s blog `post
+<https://jakevdp.github.io/blog/2013/08/07/conways-game-of-life/>`_):
+
+* **Overpopulation**: if a living cell is surrounded by more than three living cells, it dies
+* **Stasis**: if a living cell is surrounded by two or three living cells, it survives
+* **Underpopulation**: if a living cell is surrounded by fewer than two living cells, it dies
+* **Reproduction**: if a dead cell is surrounded by exactly three cells, it becomes a live cell
+
+In Seagull, you simply define your :code:`Board`, add your :code:`Lifeform`/s,
+and run the :code:`Simulator` given a :code:`rule`. You can add multiple
+lifeforms as you want:
 
 .. code-block:: python
 
@@ -41,7 +51,7 @@ You can manually create your lifeforms by using the :code:`Custom` class:
    from seagull.lifeforms import Custom
 
    board = sg.Board(size=(30,30))
-   board.add(Custom([[0,1,1,0], [0,0,1,1]]))
+   board.add(Custom([[0,1,1,0], [0,0,1,1]]), loc=(0,0))
 
 Obtaining simulation statistics and history 
 -------------------------------------------

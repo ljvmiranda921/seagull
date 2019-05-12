@@ -115,7 +115,7 @@ import seagull as sg
 from seagull.lifeforms import Custom
 
 board = sg.Board(size=(30,30))
-board.add(Custom([[0,1,1,0], [0,0,1,1]]))
+board.add(Custom([[0,1,1,0], [0,0,1,1]]), loc=(0,0))
 ```
 
 ### Obtaining simulation statistics and history 
@@ -130,6 +130,11 @@ stats = sim.run(sg.rules.conway_classic, iters=1000)
 # You can also get it using get_history()
 hist = sim.get_history()
 ```
+
+## Examples
+
+You can find more examples in the
+[documentation](https://pyseagull.readthedocs.io/en/latest/examples.html)
 
 ## Contributing
 
