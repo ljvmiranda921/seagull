@@ -113,3 +113,19 @@ Before you submit a pull request, check that it meets these guidelines:
 3. The pull request should work for Python 3.5, and above. Check
    https://dev.azure.com/ljvmiranda/ljvmiranda/_build/latest?definitionId=3&branchName=master
    and make sure that the tests pass for all supported Python versions.
+
+Contributing examples
+---------------------
+
+When contributing notebooks, just ensure the following:
+
+1. **All notebooks have clear outputs.** You can click the `Restart and Clear
+   Output` in the toolbar or use a tool like `nbstripout`. Sphinx does the job
+   of executing them before deployment.
+2. **Each cell has an execution timeout of 3 minutes.** Take note of that when
+   setting very long iterations. Please note in the PR if the example really
+   reqiures long iterations so the limit can be relaxed properly.
+3. **Ensure that the environment can be reproduced easily.** Highly-complex
+   configuration might not be accepted. If the notebook only relies on Seagull,
+   the better.
+
