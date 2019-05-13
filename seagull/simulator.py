@@ -16,6 +16,17 @@ statistics are returned.
     sim = sg.Simulator(board)
     stats = sim.run(sg.rules.conway_classic, iters=1000)
 
+You can always get the history of the whole simulation by calling the
+`get_history()` method. The length of the history will always be equal to
+:code:`iters + 1` since we include the initial state
+
+.. note::
+
+    Running a simulation does not change the :code:`state` attribute of the
+    board. Internally, the simulator makes a copy of that layout and updates
+    that instead. This is to avoid unintended behaviour when running
+    simulations again and again.
+
 Various statistics such as entropy, peak cell coverage, and the like are
 returned as a dictionary. This gives us an idea on the characteristics of the
 simulation experiment.
@@ -70,7 +81,7 @@ class Simulator:
         """
         self.board = board
         self.history = []  # type: list
-        self.stats = {}    # type: dict
+        self.stats = {}  # type: dict
 
     def run(self, rule: Callable, iters: int) -> dict:
         """Run the simulation for a given number of iterations
@@ -88,10 +99,15 @@ class Simulator:
         dict
            Computed statistics for the simulation run
         """
+        layout = self.board.state.copy()
+
+        # Append the initial state
+        self.history.append(layout)
+
         # Run simulation
         for i in range(iters):
-            self.board.state = rule(self.board.state)
-            self.history.append(self.board.state)
+            layout = rule(layout)
+            self.history.append(layout)
 
         self.stats = self.compute_statistics(self.get_history())
         return self.stats
@@ -127,8 +143,22 @@ class Simulator:
 
         return sim_stats
 
-    def get_history(self) -> np.ndarray:
-        return np.asarray(self.history)
+    def get_history(self, exclude_init=False) -> np.ndarray:
+        """Get the simulation history
+
+        Parameters
+        ----------
+        exclude_init: bool
+            If True, then excludes the initial state in the history
+
+        Returns
+        -------
+        numpy.ndarray
+            Simulation history of shape :code:`(iters+1, board.size[0],
+            board.size[1])`
+        """
+        history = self.history[1:] if exclude_init else self.history
+        return np.asarray(history)
 
     def animate(self, figsize=(5, 5), interval=100) -> animation.FuncAnimation:
         """Animate the resulting simulation
