@@ -34,7 +34,7 @@ setup(
     zip_safe=False,
     keywords=["conway game of life" "mathematics", "cellular automata"],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
@@ -47,6 +47,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.5",
+        "Typing :: Typed",
     ],
     test_suite="tests",
 )
