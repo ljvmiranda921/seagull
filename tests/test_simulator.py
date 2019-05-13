@@ -2,6 +2,7 @@
 
 # Import modules
 import pytest
+import numpy as np
 from matplotlib import animation
 
 
@@ -19,14 +20,16 @@ def test_simulator_run():
     assert isinstance(stats, dict)
 
 
-def test_simulator_get_history_shape():
+@pytest.mark.parametrize("exclude_init", [True, False])
+def test_simulator_get_history_shape(exclude_init):
     """Test if get_history() will return the expected shape"""
     board = sg.Board(size=(10, 10))
     board.add(lf.Blinker(length=3), loc=(0, 1))
     sim = sg.Simulator(board)
     sim.run(sg.rules.conway_classic, iters=10)
-    hist = sim.get_history()
-    assert hist.shape == (10, 10, 10)
+    hist = sim.get_history(exclude_init)
+    expected_depth = 10 if exclude_init else 11
+    assert hist.shape == (expected_depth, 10, 10)
 
 
 def test_simulator_animate():
@@ -56,3 +59,17 @@ def test_compute_statistics():
     sim.run(sg.rules.conway_classic, iters=10)
     stats = sim.compute_statistics(sim.get_history())
     assert isinstance(stats, dict)
+
+
+def test_simulator_inplace():
+    """Test if board state didn't change after a simulation run"""
+    board = sg.Board(size=(10, 10))
+    board.add(lf.Glider(), loc=(0, 0))
+
+    # Initial board state, must be the same always
+    init_board = board.state.copy()
+
+    # Run simulator
+    sim = sg.Simulator(board)
+    sim.run(sg.rules.conway_classic, iters=10)
+    assert np.array_equal(board.state, init_board)
