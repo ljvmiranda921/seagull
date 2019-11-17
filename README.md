@@ -155,4 +155,3 @@ appreciate:
 ## License
 
 MIT License (c) 2019, Lester James V. Miranda
-
