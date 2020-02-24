@@ -5,7 +5,7 @@ attrs==19.1.0
 babel==2.6.0
 backcall==0.1.0
 better-exceptions-fork==0.2.1.post6
-bleach==3.1.0
+bleach==3.1.1
 bumpversion==0.5.3
 certifi==2019.3.9
 chardet==3.0.4
