@@ -78,6 +78,6 @@ stages:
         pythonUploadServiceConnection: 'PyPI Upload'
       displayName: 'Authenticate twine to PyPI'
     - script: |
-        python -m pip install twine
+        python -m pip install twine bdist_wheel sdist
         twine upload -r pypi --config-file $(PYPIRC_PATH) seagull 
       displayName: 'Upload files to PyPI'
