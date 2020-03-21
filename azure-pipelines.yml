@@ -71,7 +71,7 @@ stages:
   jobs:
   - job: Publish
     steps:
-    - task: DownloadPipelineArtifacts@2
+    - task: DownloadPipelineArtifact@2
       displayName: 'Download artifacts'
     - task: TwineAuthenticate@0
       inputs:
