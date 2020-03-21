@@ -65,3 +65,19 @@ stages:
           artifactName: 'seagull'
           targetPath: 'dist'
       displayName: 'Publish pipeline artifact'
+- stage: publish
+  condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
+  displayName: PublishArtifacts
+  jobs:
+  - job: Publish
+    steps:
+    - task: DownloadPipelineArtifacts@2
+      displayName: 'Download artifacts'
+    - task: TwineAuthenticate@0
+      inputs:
+        pythonUploadServiceConnection: 'PyPI Upload'
+      displayName: 'Authenticate twine to PyPI'
+    - script: |
+        python -m pip install twine
+        twine upload -r pypi --config-file $(PYPIRC_PATH) seagull 
+      displayName: 'Upload files to PyPI'
