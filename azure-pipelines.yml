@@ -54,7 +54,14 @@ stages:
         codeCoverageTool: Cobertura
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
         reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+      displayName: 'Publish coverage results'
     - script: |
         pip install wheel
         python setup.py sdist bdist_wheel
       displayName: 'Create artifacts'
+    - task: PublishPipelineArtifact@0
+      condition: and(eq(variables['python.version'], '3.7'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+      inputs:
+          artifactName: 'seagull'
+          targetPath: 'dist'
+      displayName: 'Publish pipeline artifact'
