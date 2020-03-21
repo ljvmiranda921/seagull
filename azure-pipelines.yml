@@ -48,3 +48,8 @@ stages:
         pip install wheel
         python setup.py sdist bdist_wheel
       displayName: 'Create artifacts'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFiles: '**/coverage.xml'
+        testRunTitle: 'Python $(python.version)'
+      condition: succeededOrFailed()
