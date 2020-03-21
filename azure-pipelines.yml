@@ -71,13 +71,21 @@ stages:
   jobs:
   - job: Publish
     steps:
-    - task: DownloadPipelineArtifact@2
-      displayName: 'Download artifacts'
-    - task: TwineAuthenticate@0
+    - task: UsePythonVersion@0
       inputs:
-        pythonUploadServiceConnection: 'PyPI Upload'
+        versionSpec: '3.x'
+        architecture: 'x64'
+      displayName: 'Use Python version'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        artifact: 'seagull'
+        path: 'dist'
+      displayName: 'Download artifacts'
+    - task: TwineAuthenticate@1
+      inputs:
+        pythonUploadServiceConnection: 'pypi-upload'
       displayName: 'Authenticate twine to PyPI'
     - script: |
-        python -m pip install twine bdist_wheel sdist
-        twine upload -r pypi --config-file $(PYPIRC_PATH) seagull 
+        python -m pip install twine
+        twine upload -r pypi --config-file $(PYPIRC_PATH) dist/* 
       displayName: 'Upload files to PyPI'
