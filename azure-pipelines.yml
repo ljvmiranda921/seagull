@@ -49,7 +49,7 @@ stages:
         testRunTitle: 'Python $(python.version)'
       condition: succeededOrFailed()
       displayName: 'Publish test results'
-    - task: PublishCodeCoverageResult@1
+    - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: 'JaCoCo'
         summaryFileLocation: 'coverage.xml'
