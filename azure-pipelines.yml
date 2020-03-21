@@ -42,7 +42,7 @@ stages:
       displayName: 'Install dependencies'
     - script: | 
         pip install pytest pytest-azurepipelines pytest-cov
-        pytest tests/ --cov seagull --cov-report xml
+        pytest tests/ --cov seagull --cov-report xml -p no:warnings
       displayName: 'Run tests with coverage'
     - script: |
         pip install wheel
