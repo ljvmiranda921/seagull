@@ -42,6 +42,7 @@ stages:
     - script: | 
         pip install pytest pytest-cov
         pytest tests/ --cov seagull --cov-report xml 
+        pwd
       displayName: 'Run tests with coverage'
     - task: PublishTestResults@2
       inputs:
