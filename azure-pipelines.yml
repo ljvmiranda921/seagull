@@ -41,18 +41,19 @@ stages:
       displayName: 'Install dependencies'
     - script: | 
         pip install pytest pytest-cov
-        pytest tests/ --cov seagull --junit-xml=coverage.xml 
+        pytest tests/ --cov seagull --junit-xml=junit/test-results.xml --cov-report=xml --cov-report=html
       displayName: 'Run tests with coverage'
     - task: PublishTestResults@2
       inputs:
-        testResultsFiles: 'coverage.xml'
+        testResultsFiles: '**/test-*.xml'
         testRunTitle: 'Python $(python.version)'
       condition: succeededOrFailed()
       displayName: 'Publish test results'
     - task: PublishCodeCoverageResults@1
       inputs:
-        codeCoverageTool: 'cobertura'
-        summaryFileLocation: 'coverage.xml'
+        codeCoverageTool: Cobertura
+        summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+        reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
     - script: |
         pip install wheel
         python setup.py sdist bdist_wheel
