@@ -51,7 +51,7 @@ stages:
       displayName: 'Publish test results'
     - task: PublishCodeCoverageResults@1
       inputs:
-        codeCoverageTool: 'JaCoCo'
+        codeCoverageTool: 'cobertura'
         summaryFileLocation: 'coverage.xml'
     - script: |
         pip install wheel
