@@ -46,7 +46,7 @@ stages:
       displayName: 'Run tests with coverage'
     - task: PublishTestResults@2
       inputs:
-        testResultsFiles: '$(Pipeline.Workspace)/coverage.xml'
+        testResultsFiles: 'coverage.xml'
         testRunTitle: 'Python $(python.version)'
       condition: succeededOrFailed()
     - script: |
