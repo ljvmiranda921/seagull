@@ -119,6 +119,12 @@ def main():
         energy and curiosity whenever I see these simulations seemingly "come
         to life!"
 
+        ## Contributing
+
+        Contributions are welcome! The source code for this web app can be found
+        [here](https://github.com/ljvmiranda921/seagull/tree/master/docs/notebooks).
+        For Issues and Pull Requests, please direct them to this [link](https://github.com/ljvmiranda921/seagull/issues)!
+
     """
     )
 
