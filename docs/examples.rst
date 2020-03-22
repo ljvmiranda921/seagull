@@ -15,4 +15,5 @@ You can also find the notebooks in this `link <https://github.com/ljvmiranda921/
    :maxdepth: 2
 
    notebooks/basic-usage
+   notebooks/sprator
 
