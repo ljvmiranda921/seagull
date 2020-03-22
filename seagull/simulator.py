@@ -83,7 +83,7 @@ class Simulator:
         self.history = []  # type: list
         self.stats = {}  # type: dict
 
-    def run(self, rule: Callable, iters: int) -> dict:
+    def run(self, rule: Callable, iters: int, **kwargs) -> dict:
         """Run the simulation for a given number of iterations
 
         Parameters
@@ -106,7 +106,7 @@ class Simulator:
 
         # Run simulation
         for i in range(iters):
-            layout = rule(layout)
+            layout = rule(layout, **kwargs)
             self.history.append(layout)
 
         self.stats = self.compute_statistics(self.get_history())
