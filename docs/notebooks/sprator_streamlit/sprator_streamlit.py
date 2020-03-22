@@ -19,7 +19,7 @@ def main():
     st.sidebar.header("Parameters")
     st.sidebar.markdown("Control the automata's behavior")
     repro_rate = st.sidebar.slider(
-        "Inverse Reproduction rate", min_value=0, max_value=8, value=3
+        "Inverse Reproduction rate", min_value=0, max_value=8, value=2
     )
     stasis_rate = st.sidebar.slider(
         "Stasis rate", min_value=0, max_value=8, value=3
@@ -31,7 +31,7 @@ def main():
     st.sidebar.header("Styling")
     st.sidebar.markdown("Add design and make it unique!")
     n_sprites = st.sidebar.radio(
-        "Number of sprites (grid)", options=[1, 4, 9, 16], index=3
+        "Number of sprites (grid)", options=[1, 4, 9, 16], index=2
     )
     if n_sprites == 1:
         st.sidebar.text("Only applicable for single sprites")
@@ -71,15 +71,26 @@ def main():
     """
     )
 
-    with st.spinner("Wait for it..."):
-        fig = make_sprite(
-            n_sprites=n_sprites,
-            n_iters=n_iters,
-            repro_rate=repro_rate,
-            stasis_rate=stasis_rate,
-            colors=colors,
-        )
-        st.pyplot(fig=fig, bbox_inches="tight")
+    if st.button("Refresh"):
+        with st.spinner("Wait for it..."):
+            fig = make_sprite(
+                n_sprites=n_sprites,
+                n_iters=n_iters,
+                repro_rate=repro_rate,
+                stasis_rate=stasis_rate,
+                colors=colors,
+            )
+    else:
+        with st.spinner("Wait for it..."):
+            fig = make_sprite(
+                n_sprites=n_sprites,
+                n_iters=n_iters,
+                repro_rate=repro_rate,
+                stasis_rate=stasis_rate,
+                colors=colors,
+            )
+
+    st.pyplot(fig=fig, bbox_inches="tight")
 
     st.markdown("*To download, simply right-click the image, and save as PNG*")
 
@@ -99,6 +110,15 @@ def main():
         living cells, it dies
         * **Reproduction**: if a dead cell is surrounded by exactly three cells, it
         becomes a live cell.
+
+        I find artifical life and nature-inspired computing highly-interesting.
+        Before, I made a particle swarm optimization library called
+        [PySwarms](https://github.com/ljvmiranda921/pyswarms), then two years
+        later, I built a Conways' Game of Life simulator called
+        [Seagull](https://github.com/ljvmiranda921/seagull). There's a certain
+        energy and curiosity whenever I see these simulations seemingly "come
+        to life!"
+
     """
     )
 
@@ -173,13 +193,13 @@ def make_sprite(
         fig, axs = plt.subplots(n_grid, n_grid, figsize=(5, 5))
         axs = fig.add_axes([0, 0, 1, 1], xticks=[], yticks=[], frameon=False)
         axs.imshow(sprator_list[0], interpolation="nearest")
-        fig.text(0, -0.05, "bit.ly/PythonSprator", ha="left", color="black")
+        fig.text(0, -0.05, "bit.ly/CellularSprites", ha="left", color="black")
     else:
         fig, axs = plt.subplots(n_grid, n_grid, figsize=(5, 5))
         for ax, sprator in zip(axs.flat, sprator_list):
             ax.imshow(sprator, interpolation="nearest")
             ax.set_axis_off()
-        fig.text(0.125, 0.05, "bit.ly/PythonSprator", ha="left")
+        fig.text(0.125, 0.05, "bit.ly/CellularSprites", ha="left")
 
     return fig
 
