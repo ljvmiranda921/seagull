@@ -19,10 +19,10 @@ def main():
     st.sidebar.header("Parameters")
     st.sidebar.markdown("Control the automata's behavior")
     repro_rate = st.sidebar.slider(
-        "Inverse Reproduction rate", min_value=0, max_value=8, value=2
+            "Extinction rate: controls how many dead cells will stay dead on the next iteration", min_value=0, max_value=8, value=2
     )
     stasis_rate = st.sidebar.slider(
-        "Stasis rate", min_value=0, max_value=8, value=3
+            "Stasis rate: controls how many live cells will stay alive on the next iteration", min_value=0, max_value=8, value=3
     )
     n_iters = st.sidebar.slider(
         "No. of iterations", min_value=0, max_value=20, value=1
