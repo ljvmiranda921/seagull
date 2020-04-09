@@ -1,17 +1,18 @@
 # Import standard library
+import random
 from math import sqrt
 from typing import Tuple
 
 # Import modules
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+import matplotlib as mpl
 import numpy as np
 import seagull as sg
 import seagull.lifeforms as lf
 import streamlit as st
 from loguru import logger
 from scipy.signal import convolve2d
-from palettable import matplotlib as mpl_color
-from palettable import scientific
 
 
 def main():
@@ -19,10 +20,16 @@ def main():
     st.sidebar.header("Parameters")
     st.sidebar.markdown("Control the automata's behavior")
     repro_rate = st.sidebar.slider(
-            "Extinction rate: controls how many dead cells will stay dead on the next iteration", min_value=0, max_value=8, value=2
+        "Extinction rate: controls how many dead cells will stay dead on the next iteration",
+        min_value=0,
+        max_value=8,
+        value=2,
     )
     stasis_rate = st.sidebar.slider(
-            "Stasis rate: controls how many live cells will stay alive on the next iteration", min_value=0, max_value=8, value=3
+        "Stasis rate: controls how many live cells will stay alive on the next iteration",
+        min_value=0,
+        max_value=8,
+        value=3,
     )
     n_iters = st.sidebar.slider(
         "No. of iterations", min_value=0, max_value=20, value=1
@@ -33,33 +40,6 @@ def main():
     n_sprites = st.sidebar.radio(
         "Number of sprites (grid)", options=[1, 4, 9, 16], index=2
     )
-    if n_sprites == 1:
-        st.sidebar.text("Only applicable for single sprites")
-        fill_color = st.sidebar.text_input("Fill color", "#FFFFFF")
-        base_color = st.sidebar.text_input("Base color", "#000000")
-        colors = [{"fill": fill_color, "base": base_color}]
-        try:
-            hex_to_rgb(colors[0]["fill"])
-            hex_to_rgb(colors[0]["fill"])
-        except Exception as e:
-            st.exception(ValueError("Cannot convert hex code"))
-    else:
-        color_schemes = {
-            "Inferno": mpl_color.Inferno_20,
-            "Viridis": mpl_color.Viridis_20,
-            "Magma": mpl_color.Magma_20,
-            "Plasma": mpl_color.Plasma_20,
-            "Acton": scientific.sequential.Acton_20,
-            "Bamako": scientific.sequential.Bamako_20,
-            "Batlow": scientific.sequential.Batlow_20,
-            "Buda": scientific.sequential.Buda_20,
-        }
-        scheme = st.sidebar.selectbox("Color scheme", list(color_schemes.keys()))
-        hex_colors = color_schemes[scheme].hex_colors
-        colors = [
-            {"fill": fill, "base": base}
-            for fill, base in zip(hex_colors, hex_colors[::-1])
-        ]
 
     # Main Page
     st.title("Create sprites using Cellular Automata!")
@@ -78,7 +58,6 @@ def main():
                 n_iters=n_iters,
                 repro_rate=repro_rate,
                 stasis_rate=stasis_rate,
-                colors=colors,
             )
     else:
         with st.spinner("Wait for it..."):
@@ -87,7 +66,6 @@ def main():
                 n_iters=n_iters,
                 repro_rate=repro_rate,
                 stasis_rate=stasis_rate,
-                colors=colors,
             )
 
     st.pyplot(fig=fig, bbox_inches="tight")
@@ -147,7 +125,6 @@ def make_sprite(
     n_iters: int,
     repro_rate: int,
     stasis_rate: int,
-    colors=None,
 ):
     """Main function for creating sprites
 
@@ -161,9 +138,6 @@ def make_sprite(
         Inverse reproduction rate
     stasis_rate : int
         Stasis rate
-    colors: list of dicts
-        Must have keys for `fill` and `base`
-
     """
     logger.info("Initializing board")
     board = sg.Board(size=(8, 4))
@@ -171,7 +145,7 @@ def make_sprite(
     logger.info("Running simulation")
     sprator_list = []
 
-    for i, color in zip(range(n_sprites), colors):
+    for sprite in range(n_sprites):
         noise = np.random.choice([0, 1], size=(8, 4))
         custom_lf = lf.Custom(noise)
         board.add(custom_lf, loc=(0, 0))
@@ -184,26 +158,54 @@ def make_sprite(
         )
         fstate = sim.get_history()[-1]
 
-        logger.info(f"Generating sprite/s: {i}")
+        logger.info(f"Generating sprite/s: {sprite}")
         sprator = np.hstack([fstate, np.fliplr(fstate)])
         sprator = np.pad(
             sprator, mode="constant", pad_width=1, constant_values=1
         )
-        sprator_colored = apply_color(sprator, color["fill"], color["base"])
-        sprator_list.append(sprator_colored)
+        sprator_with_outline = add_outline(sprator)
+        sprator_gradient = get_gradient(sprator_with_outline)
+        sprator_final = combine(sprator_with_outline, sprator_gradient)
+        sprator_list.append(sprator_final)
 
     # Generate plot based on the grid size
     n_grid = int(sqrt(n_sprites))
 
+    # Generate random colors as cmap
+    r = lambda: "#%02X%02X%02X" % (
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+    )
+    colors = ["black", "#f2f2f2", r(), r(), r()]
+    cm.register_cmap(
+        cmap=mpl.colors.LinearSegmentedColormap.from_list(
+            "custom", colors
+        ).reversed()
+    )
+
     if n_grid == 1:
         fig, axs = plt.subplots(n_grid, n_grid, figsize=(5, 5))
         axs = fig.add_axes([0, 0, 1, 1], xticks=[], yticks=[], frameon=False)
-        axs.imshow(sprator_list[0], interpolation="nearest")
+        axs.imshow(sprator_list[0], cmap="custom_r", interpolation="nearest")
         fig.text(0, -0.05, "bit.ly/CellularSprites", ha="left", color="black")
     else:
         fig, axs = plt.subplots(n_grid, n_grid, figsize=(5, 5))
         for ax, sprator in zip(axs.flat, sprator_list):
-            ax.imshow(sprator, interpolation="nearest")
+            # TODO: Remove duplicates
+            # Generate random colors as cmap
+            r = lambda: "#%02X%02X%02X" % (
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255),
+            )
+            colors = ["black", "#f2f2f2", r(), r(), r()]
+            cm.register_cmap(
+                cmap=mpl.colors.LinearSegmentedColormap.from_list(
+                    "custom", colors
+                ).reversed()
+            )
+            ax.imshow(sprator, cmap="custom_r", interpolation="nearest")
             ax.set_axis_off()
         fig.text(0.125, 0.05, "bit.ly/CellularSprites", ha="left")
 
@@ -218,22 +220,50 @@ def custom_rule(X, repro_rate=3, stasis_rate=3) -> np.ndarray:
     return reproduction_rule | stasis_rule
 
 
-def hex_to_rgb(h: str) -> Tuple[int, int, int]:
-    """Convert a hex code to an RGB tuple"""
-    h_ = h.lstrip("#")
-    rgb = tuple(int(h_[i : i + 2], 16) for i in (0, 2, 4))
-    return rgb
+def add_outline(mat: np.ndarray) -> np.ndarray:
+    """Pad the matrix"""
+    m = np.ones(mat.shape)
+    for idx, orig_val in np.ndenumerate(mat):
+        x, y = idx
+        neighbors = [(x, y + 1), (x + 1, y), (x, y - 1), (x - 1, y)]
+        if orig_val == 0:
+            m[idx] = 0  # Set the coordinate in the new matrix as 0
+            for n_coord in neighbors:
+                try:
+                    m[n_coord] = 0.5 if mat[n_coord] == 1 else 0
+                except IndexError:
+                    pass
+
+    m = np.pad(m, mode="constant", pad_width=1, constant_values=1)
+    # Let's do a switcheroo, I know this isn't elegant but please feel free to
+    # do a PR to make this more efficient!
+    m[m == 1] = np.inf
+    m[m == 0.5] = 1
+    m[m == np.inf] = 0.5
+
+    return m
 
 
-def apply_color(
-    sprite: np.ndarray, fill_color: str, base_color: str
-) -> np.ndarray:
-    """Apply color to the sprite"""
-    sprite_color = [
-        (sprite * base) + (np.invert(sprite) * fill)
-        for base, fill in zip(hex_to_rgb(base_color), hex_to_rgb(fill_color))
-    ]
-    return np.rollaxis(np.asarray(sprite_color), 0, 3)
+def get_gradient(mat: np.ndarray) -> np.ndarray:
+    """Get gradient of an outline sprator"""
+    grad = np.gradient(mat)[0]
+
+    def _remap(new_range, matrix):
+        old_min, old_max = np.min(matrix), np.max(matrix)
+        new_min, new_max = new_range
+        old = old_max - old_min
+        new = new_max - new_min
+        return (((matrix - old_min) * new) / old) + new_min
+
+    return _remap((0.2, 0.25), grad)
+
+
+def combine(mat_outline: np.ndarray, mat_gradient: np.ndarray):
+    """Combine the matrix with outline and the one with grads"""
+    mat_final = np.copy(mat_outline)
+    mask = mat_outline == 0
+    mat_final[mask] = mat_gradient[mask]
+    return mat_final
 
 
 main()
