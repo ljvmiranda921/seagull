@@ -56,3 +56,18 @@ class Pulsar(Lifeform):
         X += X[:, ::-1]
         X += X[::-1, :]
         return X
+
+
+class FigureEight(Lifeform):
+    """A Figure eight lifeform oscillator"""
+
+    def __init__(self):
+        """Initialize the class"""
+        super(FigureEight, self).__init__()
+
+    @property
+    def layout(self) -> np.ndarray:
+        X = np.zeros((6, 6))
+        X[0:3, 0:3] = 1
+        X[3:6, 3:6] = 1
+        return X
