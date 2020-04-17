@@ -37,8 +37,8 @@ def test_rule_return_type(rule_name, fn):
     "rules, expected",
     [
         ("B2/S23", ([2], [2, 3])),
-        ("B2/S", ([2], [])),
         ("B23/S23", ([2, 3], [2, 3])),
+        ("B36/S125", ([3, 6], [1, 2, 5])),
     ],
 )
 def test_rulestring_parser_expected_values(rules, expected):

@@ -5,6 +5,7 @@ Seagull, rules are implemented as a function that takes in a 2-dimensional
 array of a given shape then returns the updated array with the rule applied"""
 
 # Import standard library
+import re
 from typing import Tuple, List
 
 # Import modules
@@ -49,15 +50,16 @@ def life_rule(X: np.ndarray, rulestring: str) -> np.ndarray:
 
 def _parse_rulestring(r: str) -> Tuple[List[int], List[int]]:
     """Parse a rulestring"""
-    try:
+    pattern = re.compile("B([0-8]+)\/S([0-8]+)")
+    if pattern.match(r):
         birth, survival = r.split("/")
         birth_neighbors = [int(s) for s in birth if s.isdigit()]
         survival_neighbors = [int(s) for s in survival if s.isdigit()]
-    except Exception as e:
-        msg = f"Cannot parse rulestring {r}: {e}"
+    else:
+        msg = f"Rulestring ({r}) must satisfy the pattern {pattern}"
         logger.error(msg)
-        print(msg)
-        raise
+        raise ValueError(msg)
+
     return birth_neighbors, survival_neighbors
 
 
