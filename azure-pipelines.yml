@@ -52,7 +52,10 @@ stages:
         codeCoverageTool: Cobertura
         summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
         reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
-      displayName: 'Publish coverage results'
+      displayName: 'Publish coverage results in Azure'
+    - script: |
+        bash <(curl -s https://codecov.io/bash) -y ./codecov.yml
+      displayName: 'Publish coverage results in Codecov.io'
     - script: |
         pip install wheel
         python setup.py sdist bdist_wheel
