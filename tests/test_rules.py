@@ -33,6 +33,27 @@ def test_rule_return_type(rule_name, fn):
     assert isinstance(new_state, (list, np.ndarray))
 
 
+@pytest.mark.parametrize(
+    "rules, expected",
+    [
+        ("B2/S23", ([2], [2, 3])),
+        ("B2/S", ([2], [])),
+        ("B23/S23", ([2, 3], [2, 3])),
+    ],
+)
+def test_rulestring_parser_expected_values(rules, expected):
+    expected_birth, expected_survival = expected
+    birth, survival = sg.rules._parse_rulestring(rules)
+    assert set(birth) == set(expected_birth)
+    assert set(survival) == set(expected_survival)
+
+
+@pytest.mark.parametrize("rules", ["/", "23/S23", "B23"])
+def test_rulestring_should_handle_wrong_inputs_gracefully(rules):
+    with pytest.raises(Exception):
+        sg.rules._parse_rulestring(rules)
+
+
 def test_conway_alive_cell_with_no_neighbor_dies():
     cell = (1, 1)
     state = put_cells_to_board([cell])
