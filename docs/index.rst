@@ -25,6 +25,10 @@ Welcome to Seagull!
 
 A Python library for Conway's Game of Life
 
+.. code-block:: bash
+
+   pip install pyseagull
+
 This framework allows you to create and simulate various artificial lifeforms
 and cellular automata easily: simply define your board, add your lifeforms,
 and execute the `run` command! It also provides a myriad of pre-made
