@@ -16,19 +16,8 @@ from loguru import logger
 
 
 def conway_classic(X) -> np.ndarray:
-    """The classic Conway's Rule for Game of Life
-
-    The classic conway rule states the following:
-        1. Any live cell with fewer than two live neighbours dies (exposure)
-        2. Any live cell with more than three live neighbours dies (overcrowding)
-        3. Any live cell with two or three live neighbours lives, unchanged, to the next generation.
-        4. Any dead cell with exactly three live neighbours will come to life
-
-    """
-    nbrs_count = (
-        convolve2d(X, np.ones((3, 3)), mode="same", boundary="wrap") - X
-    )
-    return (nbrs_count == 3) | (X & (nbrs_count == 2))
+    """The classic Conway's Rule for Game of Life (B3/S23)"""
+    return life_rule(X, rulestring="B3/S23")
 
 
 def life_rule(X: np.ndarray, rulestring: str) -> np.ndarray:
@@ -51,10 +40,10 @@ def life_rule(X: np.ndarray, rulestring: str) -> np.ndarray:
     np.ndarray
         Updated board after applying the rule
     """
-    birth, survival = _parse_rulestring(rulestring)
+    birth_req, survival_req = _parse_rulestring(rulestring)
     neighbors = _count_neighbors(X)
-    birth_rule = (X == 0) & (neighbors in birth)
-    survival_rule = (X == 1) & (neighbors in survival)
+    birth_rule = (X == 0) & (np.isin(neighbors, birth_req))
+    survival_rule = (X == 1) & (np.isin(neighbors, survival_req))
     return birth_rule | survival_rule
 
 
