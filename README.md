@@ -7,6 +7,7 @@
     <a href="https://dev.azure.com/ljvmiranda/ljvmiranda/_build/latest?definitionId=3&branchName=master"><img src="https://dev.azure.com/ljvmiranda/ljvmiranda/_apis/build/status/ljvmiranda921.seagull?branchName=master"></img></a>
     <a href="https://pyseagull.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/pyseagull/badge/?version=latest"></img></a>
     <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/github/license/ljvmiranda921/seagull.svg?color=blue"></img></a>
+    <a href="https://codecov.io/gh/ljvmiranda921/seagull"><img src="https://codecov.io/gh/ljvmiranda921/seagull/branch/master/graph/badge.svg"/></a>
     <a href="https://mybinder.org/v2/gh/ljvmiranda921/seagull/master?filepath=docs%2Fnotebooks"><img src="https://mybinder.org/badge_logo.svg"></img></a>
 </p>
 
