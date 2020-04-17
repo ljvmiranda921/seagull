@@ -54,7 +54,7 @@ stages:
         reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
       displayName: 'Publish coverage results in Azure'
     - script: |
-        bash <(curl -s https://codecov.io/bash) -y ./codecov.yml
+        bash <(curl -s https://codecov.io/bash) -y ./codecov.yml -t $(CODECOV_TOKEN)
       displayName: 'Publish coverage results in Codecov.io'
     - script: |
         pip install wheel
