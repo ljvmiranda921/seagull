@@ -50,7 +50,7 @@ def life_rule(X: np.ndarray, rulestring: str) -> np.ndarray:
 
 def _parse_rulestring(r: str) -> Tuple[List[int], List[int]]:
     """Parse a rulestring"""
-    pattern = re.compile("B([0-8]+)\/S([0-8]+)")
+    pattern = re.compile("B([0-8]+)?/S([0-8]+)?")
     if pattern.match(r):
         birth, survival = r.split("/")
         birth_neighbors = [int(s) for s in birth if s.isdigit()]
