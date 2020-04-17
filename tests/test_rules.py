@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 # Import standard library
-from inspect import getmembers, isfunction
 from typing import Tuple, List
 
 # Import modules
@@ -13,11 +12,9 @@ import seagull as sg
 from seagull import lifeforms as lf
 from seagull.rules import conway_classic
 
-all_rules = [
-    fn
-    for name, fn in getmembers(sg.rules, predicate=isfunction)
-    if (not name.startswith("_") & ("life_rule" in name))  # ignore private
-]
+
+# Define all rules here
+all_rules = [("conway_classic", sg.rules.conway_classic)]
 
 
 @pytest.mark.parametrize("rule_name, fn", all_rules)
