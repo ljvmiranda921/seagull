@@ -71,3 +71,18 @@ class FigureEight(Lifeform):
         X[0:3, 0:3] = 1
         X[3:6, 3:6] = 1
         return X
+
+
+class Beacon(Lifeform):
+    """A Beacon lifeform oscillator"""
+
+    def __init__(self):
+        """Initialize the class"""
+        super(Beacon, self).__init__()
+
+    @property
+    def layout(self) -> np.ndarray:
+        X = np.zeros((4, 4))
+        X[0:2, 0:2] = 1
+        X[2:4, 2:4] = 1
+        return X
