@@ -11,6 +11,7 @@ from matplotlib.image import AxesImage
 
 # Import from package
 import seagull as sg
+from seagull.lifeforms.utils import parse_cells, parse_plaintext_layout
 
 all_lifeforms = [
     lf
@@ -54,16 +55,17 @@ def test_custom_validate_input_shape():
 
 def test_parse_plaintext_layout():
     """Test if parse_plaintext_layout parses sample text correctly"""
-    layout = sg.lifeforms.utils.parse_plaintext_layout('''!Name: Name
+    layout = parse_plaintext_layout('''!Name: Name
 ! comment
 ..O
 .O
-.
+O
 ''')
     assert len(layout.shape) == 2
     assert layout.shape==(3,3)
-    assert np.sum(layout - [[0,1,0],[0,0,1],[1,1,1]]) == 0
+    assert np.sum(layout - [[0,0,1],[0,1,0],[1,0,0]]) == 0
 
+@pytest.mark.skip
 def test_glider_lifeform(lifeform):
     """Test if lifeform is a proper Glider"""
     assert len(lifeform.size) == 2
@@ -74,7 +76,7 @@ def test_glider_lifeform(lifeform):
 
 def test_lifeform_parse_cells():
     """Test if lifeform is properly parsed from text"""
-    lifeform = sg.lifeforms.utils.parse_cells('''!Name: Glider
+    lifeform = parse_cells('''!Name: Glider
 !Author: Richard K. Guy
 !The smallest, most common, and first discovered spaceship.
 !www.conwaylife.com/wiki/index.php?title=Glider
@@ -83,16 +85,24 @@ def test_lifeform_parse_cells():
 OOO''')
     test_glider_lifeform(lifeform)
 
-def test_lifeform_parse_cells_file():
+def test_lifeform_parse_cells_file(tmp_path):
     """Test if lifeform is properly parsed from file"""
-    lifeform = sg.lifeforms.utils.parse_cells(
-        'glider.cells')
+    d = tmp_path / "sub"
+    d.mkdir()
+    p = d / "glider.cells"
+    p.write_text('''!Name: Glider
+!Author: Richard K. Guy
+!The smallest, most common, and first discovered spaceship.
+!www.conwaylife.com/wiki/index.php?title=Glider
+.O
+..O
+OOO''')
+    lifeform = parse_cells(str(p))
     test_glider_lifeform(lifeform)
-
 
 def test_lifeform_parse_cells_url():
     """Test if lifeform is properly parsed from URL"""
-    lifeform = sg.lifeforms.utils.parse_cells(
+    lifeform = parse_cells(
         'http://www.conwaylife.com/patterns/glider.cells')
     test_glider_lifeform(lifeform)
 
