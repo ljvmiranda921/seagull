@@ -52,6 +52,9 @@ def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
         lines = [line for line in lines if line[0] != "!"]
 
     # @TODO:check if only '.' and 'O' are present
+    if set(''.join(lines)) != {'.','O'}:
+        raise ValueError("Invalid input cells_str : use only '.' and 'O'")
+
     layout = [[1 if c == "O" else 0 for c in line] for line in lines]
 
     max_width = max(len(line) for line in layout)

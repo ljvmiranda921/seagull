@@ -75,6 +75,10 @@ def test_parse_plaintext_layout_list():
     assert layout.shape == (3, 3)
     assert np.sum(layout - [[0, 0, 1], [0, 1, 0], [1, 0, 0]]) == 0
 
+def test_parse_plaintext_layout_letters_error():
+    """Test if parse_plaintext_layout checks proper letter in input"""
+    with pytest.raises(ValueError):
+        parse_plaintext_layout(['..O','.OX','O'])
 
 @pytest.mark.skip
 def test_glider_lifeform(lifeform):
