@@ -13,7 +13,8 @@ from os.path import isfile
 from .base import Lifeform
 from .custom import Custom
 
-def parse_plaintext_layout(plaintext_str : str) -> np.ndarray:
+
+def parse_plaintext_layout(plaintext_str: str) -> np.ndarray:
     """Parses plaintext_str in Plaintext format into layoutndarray
     
     typical plaintext_str format:
@@ -30,20 +31,20 @@ def parse_plaintext_layout(plaintext_str : str) -> np.ndarray:
         lines = plaintext_str
     else:
         # split lines, ignore comments
-        lines = plaintext_str.strip().replace('\r\n','\n').split('\n')
-        lines = [line for line in lines if line[0] != '!']
-    
+        lines = plaintext_str.strip().replace("\r\n", "\n").split("\n")
+        lines = [line for line in lines if line[0] != "!"]
+
     # @TODO:check if only '.' and 'O' are present
-    layout = [[1 if c=='O' else 0 for c in line] for line in lines]
+    layout = [[1 if c == "O" else 0 for c in line] for line in lines]
 
     max_width = max(len(line) for line in layout)
     # add zeroes so that all lines are of equal length
     [line.extend([0] * (max_width - len(line))) for line in layout]
-    
-    return np.array(layout)
-    
 
-def parse_cells(cells_str : str) -> Lifeform:
+    return np.array(layout)
+
+
+def parse_cells(cells_str: str) -> Lifeform:
     """Parses cell_str, stored in Plaintext format, into Lifeform
     
     sample usage:
@@ -73,51 +74,53 @@ def parse_cells(cells_str : str) -> Lifeform:
 
 
     """
-    if cells_str[0] not in {'.','0','!'}:
+    if cells_str[0] not in {".", "0", "!"}:
         # not a proper .cells line, filename?
         if isfile(cells_str):
-            print(f'reading from file [{cells_str}]..', end='')
-            with open(cells_str, 'r') as f:
+            print(f"reading from file [{cells_str}]..", end="")
+            with open(cells_str, "r") as f:
                 cells_str = f.read()
-            print('ok')
-        elif cells_str[:3] in {'ftp','htt'}:
+            print("ok")
+        elif cells_str[:3] in {"ftp", "htt"}:
             # web-hosted file?
-            print(f'trying to download [{cells_str}]..', end='')
+            print(f"trying to download [{cells_str}]..", end="")
             req = urllib.request.urlopen(cells_str)
-            if req.getcode()!=200:
-                raise ValueError('Invalid input cells_str,'\
-                                 f' request returned {req.getcode()}')
-            print('ok')
-            cells_str = req.read().decode('utf-8')
+            if req.getcode() != 200:
+                raise ValueError(
+                    "Invalid input cells_str,"
+                    f" request returned {req.getcode()}"
+                )
+            print("ok")
+            cells_str = req.read().decode("utf-8")
         else:
-            raise ValueError('Invalid input cells_str')
+            raise ValueError("Invalid input cells_str")
     # split lines, \r if (down)loaded and not copy-pasted
-    lines = cells_str.strip().replace('\r\n','\n').split('\n')
+    lines = cells_str.strip().replace("\r\n", "\n").split("\n")
 
     comments = []
     layout = []
     name = None
     author = None
     for line in lines:
-        if line and line[0]=='!':
+        if line and line[0] == "!":
             # parsing commented lines
             # @TODO: prettify? or delete this todo
-            if line.startswith('!Name: '):
-                name = line[len('!Name: '):]
-            elif line.startswith('!Author: '):
-                author = line[len('!Author: '):]
+            if line.startswith("!Name: "):
+                name = line[len("!Name: ") :]
+            elif line.startswith("!Author: "):
+                author = line[len("!Author: ") :]
             else:
                 comments.append(line[1:])
         else:
             # collecting layout
             layout.append(line)
 
-    comments = '\n'.join(comments)
+    comments = "\n".join(comments)
 
     layout = parse_plaintext_layout(layout)
 
     R = Custom(layout)  # LifeForm to be returned
-    
+
     # Setting custom fields parsed from comments
     R.comments = comments
     if name is not None:
@@ -126,7 +129,3 @@ def parse_cells(cells_str : str) -> Lifeform:
         R.author = author
 
     return R
-
-
-    
-
