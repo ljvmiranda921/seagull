@@ -11,7 +11,7 @@ from matplotlib.image import AxesImage
 
 # Import from package
 import seagull as sg
-from seagull.lifeforms.utils import parse_cells, parse_plaintext_layout
+from seagull.lifeforms.wiki import parse_cells, parse_plaintext_layout
 
 all_lifeforms = [
     lf
@@ -64,6 +64,13 @@ def test_parse_plaintext_layout():
 O
 """
     )
+    assert len(layout.shape) == 2
+    assert layout.shape == (3, 3)
+    assert np.sum(layout - [[0, 0, 1], [0, 1, 0], [1, 0, 0]]) == 0
+
+def test_parse_plaintext_layout_list():
+    """Test if parse_plaintext_layout parses sample list input correctly"""
+    layout = parse_plaintext_layout(['..O','.O','O'])
     assert len(layout.shape) == 2
     assert layout.shape == (3, 3)
     assert np.sum(layout - [[0, 0, 1], [0, 1, 0], [1, 0, 0]]) == 0

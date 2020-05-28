@@ -1,22 +1,28 @@
 # -*- coding: utf-8 -*-
 """
 
-utils for LifeForm, original intent - parse .cells and .rle files
+Functions for parsing LifeForm from Wiki
 
 Created 20200525 by ep (eugen.pt@gmail.com)
 """
 
-import numpy as np
-import urllib
+# Import standard library
 from os.path import isfile
+from typing import Union
+from urllib.parse import urlparse
+from urllib.request import urlopen
+
+# Import modules
+import numpy as np
+from loguru import logger
 
 from .base import Lifeform
 from .custom import Custom
 
 
-def parse_plaintext_layout(plaintext_str: str) -> np.ndarray:
-    """Parses plaintext_str in Plaintext format into layoutndarray
-    
+def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
+    """Parse plaintext_str in Plaintext format into ndarray layout
+
     typical plaintext_str format:
     '''
     .O.O
@@ -25,8 +31,19 @@ def parse_plaintext_layout(plaintext_str: str) -> np.ndarray:
     ......O
     '''
 
+    Parameters
+    ----------
+    cells_str : Union[str, list]
+        Plaintext format lifeform description
+        May be a list of lines in which case no comment lines are allowed 
+
+    Raises
+    ------
+    ValueError
+        if invalid input provided
+
     """
-    if type(plaintext_str) == list:
+    if isinstance(plaintext_str, list):
         # already line-split
         lines = plaintext_str
     else:
@@ -45,27 +62,34 @@ def parse_plaintext_layout(plaintext_str: str) -> np.ndarray:
 
 
 def parse_cells(cells_str: str) -> Lifeform:
-    """Parses cell_str, stored in Plaintext format, into Lifeform
+    """Parse cell_str, stored in Plaintext format, into Lifeform
     
-    sample usage:
-    G = parse_cells('http://www.conwaylife.com/patterns/glider.cells')
-    or
-    G = parse_cells('''
-            !Name: name of the Lifeform
-            ! some comment
-            .O
-            ..O
-            OOO
-            '''
-        )
-    
-    . (dot) for empty cell, O (capital O) for alive cell, no trailing .s
-
     Plaintext format description: https://conwaylife.com/wiki/Plaintext
+
+    Usage
+    -----
+    You can enter a string directly into the function: 
+
+    G = parse_cells(
+        '''!Name: name of the Lifeform
+! some comment
+.O
+..O
+OOO
+'''
+        )
+    # . (dot) for empty cell, O (capital O) for alive cell, no trailing .s
+
+    Or you can parse cells immediately from Conway Life's website:
+
+    G = parse_cells('http://www.conwaylife.com/patterns/glider.cells')
+    
 
     Parameters
     ----------
-    cells_str : str, also may be a filename or a URL to be (down)loaded from        
+    cells_str : str
+        Plaintext format lifeform description
+        May be a filename or a URL to be (down)loaded from        
 
     Raises
     ------
@@ -77,23 +101,23 @@ def parse_cells(cells_str: str) -> Lifeform:
     if cells_str[0] not in {".", "0", "!"}:
         # not a proper .cells line, filename?
         if isfile(cells_str):
-            print(f"reading from file [{cells_str}]..", end="")
+            logger.trace(f"reading from file [{cells_str}]..", end="")
             with open(cells_str, "r") as f:
                 cells_str = f.read()
-            print("ok")
-        elif cells_str[:3] in {"ftp", "htt"}:
+            logger.trace("ok")
+        elif urlparse(cells_str).scheme in {"ftp", "http", "https"}:
             # web-hosted file?
-            print(f"trying to download [{cells_str}]..", end="")
-            req = urllib.request.urlopen(cells_str)
+            logger.trace(f"trying to download [{cells_str}]..", end="")
+            req = urlopen(cells_str)
             if req.getcode() != 200:
                 raise ValueError(
-                    "Invalid input cells_str,"
+                    "Invalid input URL cells_str,"
                     f" request returned {req.getcode()}"
                 )
-            print("ok")
+            logger.trace("ok")
             cells_str = req.read().decode("utf-8")
         else:
-            raise ValueError("Invalid input cells_str")
+            raise ValueError("Unrecognized input cells_str")
     # split lines, \r if (down)loaded and not copy-pasted
     lines = cells_str.strip().replace("\r\n", "\n").split("\n")
 
@@ -102,7 +126,7 @@ def parse_cells(cells_str: str) -> Lifeform:
     name = None
     author = None
     for line in lines:
-        if line and line[0] == "!":
+        if line and line.startswith("!"):
             # parsing commented lines
             # @TODO: prettify? or delete this todo
             if line.startswith("!Name: "):
@@ -119,13 +143,13 @@ def parse_cells(cells_str: str) -> Lifeform:
 
     layout = parse_plaintext_layout(layout)
 
-    R = Custom(layout)  # LifeForm to be returned
+    lifeform = Custom(layout)  # to be returned
 
     # Setting custom fields parsed from comments
-    R.comments = comments
+    lifeform.comments = comments
     if name is not None:
-        R.name = name
+        lifeform.name = name
     if author is not None:
-        R.author = author
+        lifeform.author = author
 
-    return R
+    return lifeform
