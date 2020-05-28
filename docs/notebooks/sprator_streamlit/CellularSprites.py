@@ -121,7 +121,10 @@ def main():
 
 
 def make_sprite(
-    n_sprites: int, n_iters: int, repro_rate: int, stasis_rate: int,
+    n_sprites: int,
+    n_iters: int,
+    repro_rate: int,
+    stasis_rate: int,
 ):
     """Main function for creating sprites
 
