@@ -112,6 +112,17 @@ def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
     return np.array(layout)
 
 def _get_metadata(lines: List[str]) -> Dict:
+    """Parse meta-data stored in the comments of .cells file
+
+    Args:
+        lines (List[str]): comment lines to be parsed
+
+    Returns:
+        Dict of meta-data by keys. Curently supported keys:
+        - name     : from line starting with "!Name: "
+        - author   : from line starting with "!Author: "
+        - comments : for all other comments
+    """
     meta = {'comments':[]}
     for line in lines:
         if line and line.startswith("!"):
