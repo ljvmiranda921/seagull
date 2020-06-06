@@ -3,47 +3,46 @@
 Lifeforms/wiki.py
 *****************
 
-Functions for parsing LifeForm from `LifeWiki <https://www.conwaylife.com/wiki/Main_Page>`_
-.
+Contains functions for parsing LifeForms directly from `LifeWiki <https://www.conwaylife.com/wiki/Main_Page>`_
 
 LifeWiki contains Pattern files of two kinds: **PlainText  .cells files** and **.rle files**
 
-.cells files
-------------
 
+The `.cells` format
+-------------------------
 
-
-.cells files are LifeForms stored in `Plaintext  <https://conwaylife.com/wiki/Plaintext>`_
+The `.cells` files are LifeForms stored in `Plaintext  <https://conwaylife.com/wiki/Plaintext>`_
 format
 
-.cells files are parsed using ``parse_cells`` function,
+The `.cells` files are parsed using the :func:`seagull.lifeforms.wiki.parse_cells` function,
 which may parse the lifeform from the input str, 
-or load it from file if filename/URL is provided as input
+or load it from file if filename/URL is provided as input::
 
-    >>> glider = parse_cells(
-        '''!Name: name of the Lifeform
+    glider = parse_cells('''!Name: name of the Lifeform
     ! some comment
     .O
     ..O
     OOO
-    '''
-    )
-    >>> glider = parse_cells('~/glider.cells') # download it first!
-    >>> glider = parse_cells('http://www.conwaylife.com/patterns/glider.cells')
+    ''')
+    
+    glider = parse_cells('~/glider.cells') # download it first!
+    
+    glider = parse_cells('http://www.conwaylife.com/patterns/glider.cells')
 
-If you only need to parse layout, you may use the underlying ``parse_plaintext_layout`` function
+If you only need to parse layout, you may use the underlying :func:`seagull.lifeforms.wiki.parse_plaintext_layout` function::
 
-    >>> layout = parse_plaintext_layout(
-            '''!Name: Name
+    layout = parse_plaintext_layout('''!Name: Name
     ! comment
     ..O
     .O
     O
     ''')
-    >>> layout
-    array([[0, 0, 1],
-           [0, 1, 0],
-           [1, 0, 0]])
+
+
+>>> layout
+array([[0, 0, 1],
+       [0, 1, 0],
+       [1, 0, 0]])
 
 
 .rle files
@@ -57,7 +56,7 @@ Created 20200525 by ep (eugen.pt@gmail.com)
 
 # Import standard library
 from os.path import isfile
-from typing import Union
+from typing import Dict, List, Union
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
@@ -98,9 +97,9 @@ def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
     else:
         # split lines, ignore comments
         lines = plaintext_str.strip().replace("\r\n", "\n").split("\n")
-        lines = [line for line in lines if line[0] != "!"]
+        lines = [line for line in lines if not line.startswith("!")]
 
-    # @TODO:check if only '.' and 'O' are present
+    # check if only '.' and 'O' are present
     if set(''.join(lines)) != {'.','O'}:
         raise ValueError("Invalid input cells_str : use only '.' and 'O'")
 
@@ -112,6 +111,9 @@ def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
 
     return np.array(layout)
 
+def _get_metadata(data: List[str]) -> Dict:
+    # @TODO
+    pass
 
 def parse_cells(cells_str: str) -> Lifeform:
     """Parse cell_str, stored in Plaintext format, into Lifeform
@@ -148,9 +150,8 @@ OOO
     ValueError
         if invalid input provided
 
-
     """
-    if cells_str[0] not in {".", "0", "!"}:
+    if not cells_str.startswith((".", "0", "!")):
         # not a proper .cells line, filename?
         if isfile(cells_str):
             logger.trace(f"reading from file [{cells_str}]..", end="")
