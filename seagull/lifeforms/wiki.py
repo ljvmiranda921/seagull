@@ -111,9 +111,25 @@ def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
 
     return np.array(layout)
 
-def _get_metadata(data: List[str]) -> Dict:
-    # @TODO
-    pass
+def _get_metadata(lines: List[str]) -> Dict:
+    meta = {'comments':[]}
+    for line in lines:
+        if line and line.startswith("!"):
+            # parsing commented lines
+            # @TODO: prettify? or delete this todo
+            if line.startswith("!Name: "):
+                meta['name'] = line[len("!Name: ") :]
+            elif line.startswith("!Author: "):
+                meta['author'] = line[len("!Author: ") :]
+            else:
+                meta['comments'].append(line[1:])
+        else:
+            # not a comment line
+            pass
+
+    meta['comments'] = "\n".join(meta['comments'])
+
+    return meta
 
 def parse_cells(cells_str: str) -> Lifeform:
     """Parse cell_str, stored in Plaintext format, into Lifeform
@@ -174,35 +190,14 @@ OOO
     # split lines, \r if (down)loaded and not copy-pasted
     lines = cells_str.strip().replace("\r\n", "\n").split("\n")
 
-    comments = []
-    layout = []
-    name = None
-    author = None
-    for line in lines:
-        if line and line.startswith("!"):
-            # parsing commented lines
-            # @TODO: prettify? or delete this todo
-            if line.startswith("!Name: "):
-                name = line[len("!Name: ") :]
-            elif line.startswith("!Author: "):
-                author = line[len("!Author: ") :]
-            else:
-                comments.append(line[1:])
-        else:
-            # collecting layout
-            layout.append(line)
+    metadata_lines = [l for l in lines if l.startswith("!")]  
+    layout_lines = [l for l in lines if not l.startswith("!")]  
 
-    comments = "\n".join(comments)
-
-    layout = parse_plaintext_layout(layout)
+    layout = parse_plaintext_layout(layout_lines)
 
     lifeform = Custom(layout)  # to be returned
 
     # Setting custom fields parsed from comments
-    lifeform.comments = comments
-    if name is not None:
-        lifeform.name = name
-    if author is not None:
-        lifeform.author = author
+    lifeform.meta = _get_metadata(metadata_lines)
 
     return lifeform

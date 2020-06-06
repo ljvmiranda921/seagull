@@ -86,8 +86,8 @@ def test_glider_lifeform(lifeform):
     assert len(lifeform.size) == 2
     assert lifeform.size == (3, 3)
     assert np.sum(lifeform.layout - [[0, 1, 0], [0, 0, 1], [1, 1, 1]]) == 0
-    assert lifeform.name == "Glider"
-    assert lifeform.author == "Richard K. Guy"
+    assert lifeform.meta['name'] == "Glider"
+    assert lifeform.meta['author'] == "Richard K. Guy"
 
 
 def test_lifeform_parse_cells():
