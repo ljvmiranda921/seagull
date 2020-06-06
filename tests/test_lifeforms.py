@@ -104,13 +104,10 @@ OOO"""
     test_glider_lifeform(lifeform)
 
 
-def test_lifeform_parse_cells_file(tmp_path):
+def test_lifeform_parse_cells_file(tmpdir):
     """Test if lifeform is properly parsed from file"""
-    d = tmp_path / "sub"
-    d.mkdir()
-    p = d / "glider.cells"
-    p.write_text(
-        """!Name: Glider
+    p = tmpdir.mkdir("sub").join("glider.cells")
+    p.write("""!Name: Glider
 !Author: Richard K. Guy
 !The smallest, most common, and first discovered spaceship.
 !www.conwaylife.com/wiki/index.php?title=Glider
