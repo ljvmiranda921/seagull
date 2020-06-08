@@ -223,7 +223,7 @@ OOO
 
     """
     if not cells_str.startswith((".", "0", "!")):
-        # not a proper .cells line, load
+        # not a proper .cells line, filename/URL?
         cells_str = _load_file_of_url(cells_str)
 
     # split lines, \r if (down)loaded and not copy-pasted
@@ -309,9 +309,9 @@ def rle2cells(rle_str: str) -> str:
 
 
 def parse_rle(rle_str: str) -> Lifeform:
-    """Parse rle_str, stored in Plaintext format, into Lifeform
+    """Parse rle_str, stored in RLE format, into Lifeform
     
-    Plaintext format description: https://www.conwaylife.com/wiki/Run_Length_Encoded
+    RLE format description: https://www.conwaylife.com/wiki/Run_Length_Encoded
 
     Usage
     -----
@@ -337,7 +337,7 @@ o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
     Parameters
     ----------
     rle_str : str
-        Plaintext format lifeform description
+        RLE encoded lifeform description
         May be a filename or a URL to be (down)loaded from        
 
     Raises
@@ -351,7 +351,7 @@ o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
         - header line is currently parsed but not used
     """
     if not rle_str.startswith(("#", "x")):
-        # not a proper .cells line, filename?
+        # not a proper .cells line, filename/URL?
         rle_str = _load_file_of_url(rle_str)
 
     # split lines, \r if (down)loaded and not copy-pasted

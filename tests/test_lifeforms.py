@@ -126,7 +126,7 @@ def test_lifeform_parse_cells_url():
 
 
 def test_lifeform_parse_rle():
-    """Test if lifeform is properly parsed from text"""
+    """Test if lifeform is properly parsed from rle-encoded text"""
     lifeform = parse_rle(
         """#N Glider
 #O Richard K. Guy
@@ -139,7 +139,7 @@ bo$2bo$3o!"""
 
 
 def test_lifeform_cells2rle():
-    """Test of proper cells2rle, relies on rle2cells being OK"""
+    """Test of cells2rle conversion, relies on rle2cells being OK"""
     cells_str = '''.......................OO........................OO
 .......................OO........................OO
 .........................................OO
