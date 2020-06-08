@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Lifeforms/wiki.py
-*****************
-
 Contains functions for parsing LifeForms directly from `LifeWiki <https://www.conwaylife.com/wiki/Main_Page>`_
 
 LifeWiki contains Pattern files of two kinds: **PlainText  .cells files** and **.rle files**
