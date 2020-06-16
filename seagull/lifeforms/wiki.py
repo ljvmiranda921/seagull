@@ -171,12 +171,11 @@ def _load_file_of_url(path: str) -> str:
             content = f.read()
         logger.trace("ok")
     elif urlparse(path).scheme in {"ftp", "http", "https"}:
-        # web-hosted file?
         logger.trace(f"trying to download [{path}]..", end="")
         req = urlopen(path)
         if req.getcode() != 200:
             raise ValueError(
-                "Invalid input URL" f" request returned {req.getcode()}"
+                f"Invalid input URL request returned {req.getcode()}"
             )
         logger.trace("ok")
         content = req.read().decode("utf-8")
@@ -254,22 +253,17 @@ def cells2rle(cells_str: Union[list, str]) -> str:
         Plaintext format lifeform description
         may be a list of lines or a str, possibly multiline
 
-
     Returns
     -------
     str
         in RLE format, no header, no comments, no trailing "!"
-
     """
     if isinstance(cells_str, str):
         cells_str = cells_str.replace("\r\n", "\n").split("\n")
 
     cells_str = "\n".join(l for l in cells_str if not l.startswith("!"))
-
-    blocks = re.findall("(\n+|\.+|O+)", cells_str)
-
+    blocks = re.findall("(\n+|\\.+|O+)", cells_str)
     parse_dict = {"\n": "$", ".": "b", "O": "o"}
-
     blocks = [
         (str(len(b)) if len(b) > 1 else "") + parse_dict[b[0]] for b in blocks
     ]
@@ -295,7 +289,7 @@ def rle2cells(rle_str: str) -> str:
     if not set(rle_str).issubset("0123456789bo$"):
         raise ValueError("Incorrect input: wrong character set")
 
-    commands = re.findall("([0-9]*)(b|o|\$)", rle_str)
+    commands = re.findall("([0-9]*)(b|o|\\$)", rle_str)
     if len(commands) == 0:
         raise ValueError("Incorrect input: wrong pattern format")
 
@@ -371,9 +365,6 @@ o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
         )
     header_match = header_match.groups()
 
-    # Hm.. do these really matter if I do not parse #R,#P,#r comments?
-    #  possible usage: check dimension of parser plaintext layout
-    #   which could differ really if rle is not optimized
     width = int(header_match[0])
     height = int(header_match[1])
 
@@ -387,6 +378,12 @@ o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
     layout_string = "".join(layout_lines[1:])
     layout_string = rle2cells(layout_string)
     layout = parse_plaintext_layout(layout_string)
+
+    if layout.shape != (height, width):
+        raise ValueError(
+                'Parsed layout width/height inconsistent with header'
+                f': header: {width} {height} , layout: {layout.shape}'
+            )
 
     lifeform = Custom(layout)  # to be returned
 
