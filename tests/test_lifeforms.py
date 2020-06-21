@@ -11,7 +11,7 @@ from matplotlib.image import AxesImage
 
 # Import from package
 import seagull as sg
-from seagull.lifeforms.wiki import parse_cells, parse_plaintext_layout
+from seagull.lifeforms.wiki import parse_cells, parse_plaintext_layout, parse_rle, rle2cells, cells2rle
 
 all_lifeforms = [
     lf
@@ -123,3 +123,45 @@ def test_lifeform_parse_cells_url():
     """Test if lifeform is properly parsed from URL"""
     lifeform = parse_cells("http://www.conwaylife.com/patterns/glider.cells")
     test_glider_lifeform(lifeform)
+
+
+def test_lifeform_parse_rle():
+    """Test if lifeform is properly parsed from rle-encoded text"""
+    lifeform = parse_rle(
+        """#N Glider
+#O Richard K. Guy
+#C The smallest, most common, and first discovered spaceship.
+#C www.conwaylife.com/wiki/index.php?title=Glider
+x = 3, y = 3
+bo$2bo$3o!"""
+    )
+    test_glider_lifeform(lifeform)
+
+
+def test_lifeform_cells2rle():
+    """Test of cells2rle conversion, relies on rle2cells being OK"""
+    cells_str = '''.......................OO........................OO
+.......................OO........................OO
+.........................................OO
+........................................O..O
+.........................................OO
+
+....................................OOO
+....................................O.O
+.........OO.........................OOO
+.........OO.........................OO
+........O..O.......................OOO
+........O..O.OO....................O.O
+........O....OO....................OOO
+..........OO.OO
+...............................OO
+.....................OO.......O..O
+.....................OO........OO
+.................................................OO
+.................................................OO
+
+....OO..................O
+OO....OOOO..........OO..OO.OOO
+OO..OO.OOO..........OO....OOOO
+....O...................OO'''
+    assert rle2cells(cells2rle(cells_str) + '!') == cells_str
