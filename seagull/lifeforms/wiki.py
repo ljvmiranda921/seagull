@@ -381,9 +381,9 @@ o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
 
     if layout.shape != (height, width):
         raise ValueError(
-                'Parsed layout width/height inconsistent with header'
-                f': header: {width} {height} , layout: {layout.shape}'
-            )
+            "Parsed layout width/height inconsistent with header"
+            f": header: {width} {height} , layout: {layout.shape}"
+        )
 
     lifeform = Custom(layout)  # to be returned
 

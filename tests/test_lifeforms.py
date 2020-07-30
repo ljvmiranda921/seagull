@@ -11,7 +11,13 @@ from matplotlib.image import AxesImage
 
 # Import from package
 import seagull as sg
-from seagull.lifeforms.wiki import parse_cells, parse_plaintext_layout, parse_rle, rle2cells, cells2rle
+from seagull.lifeforms.wiki import (
+    parse_cells,
+    parse_plaintext_layout,
+    parse_rle,
+    rle2cells,
+    cells2rle,
+)
 
 all_lifeforms = [
     lf
@@ -68,17 +74,20 @@ O
     assert layout.shape == (3, 3)
     assert np.sum(layout - [[0, 0, 1], [0, 1, 0], [1, 0, 0]]) == 0
 
+
 def test_parse_plaintext_layout_list():
     """Test if parse_plaintext_layout parses sample list input correctly"""
-    layout = parse_plaintext_layout(['..O','.O','O'])
+    layout = parse_plaintext_layout(["..O", ".O", "O"])
     assert len(layout.shape) == 2
     assert layout.shape == (3, 3)
     assert np.sum(layout - [[0, 0, 1], [0, 1, 0], [1, 0, 0]]) == 0
 
+
 def test_parse_plaintext_layout_letters_error():
     """Test if parse_plaintext_layout checks proper letter in input"""
     with pytest.raises(ValueError):
-        parse_plaintext_layout(['..O','.OX','O'])
+        parse_plaintext_layout(["..O", ".OX", "O"])
+
 
 @pytest.mark.skip
 def test_glider_lifeform(lifeform):
@@ -86,8 +95,8 @@ def test_glider_lifeform(lifeform):
     assert len(lifeform.size) == 2
     assert lifeform.size == (3, 3)
     assert np.sum(lifeform.layout - [[0, 1, 0], [0, 0, 1], [1, 1, 1]]) == 0
-    assert lifeform.meta['name'] == "Glider"
-    assert lifeform.meta['author'] == "Richard K. Guy"
+    assert lifeform.meta["name"] == "Glider"
+    assert lifeform.meta["author"] == "Richard K. Guy"
 
 
 def test_lifeform_parse_cells():
@@ -107,7 +116,8 @@ OOO"""
 def test_lifeform_parse_cells_file(tmpdir):
     """Test if lifeform is properly parsed from file"""
     p = tmpdir.mkdir("sub").join("glider.cells")
-    p.write("""!Name: Glider
+    p.write(
+        """!Name: Glider
 !Author: Richard K. Guy
 !The smallest, most common, and first discovered spaceship.
 !www.conwaylife.com/wiki/index.php?title=Glider
@@ -140,7 +150,7 @@ bo$2bo$3o!"""
 
 def test_lifeform_cells2rle():
     """Test of cells2rle conversion, relies on rle2cells being OK"""
-    cells_str = '''.......................OO........................OO
+    cells_str = """.......................OO........................OO
 .......................OO........................OO
 .........................................OO
 ........................................O..O
@@ -163,5 +173,5 @@ def test_lifeform_cells2rle():
 ....OO..................O
 OO....OOOO..........OO..OO.OOO
 OO..OO.OOO..........OO....OOOO
-....O...................OO'''
-    assert rle2cells(cells2rle(cells_str) + '!') == cells_str
+....O...................OO"""
+    assert rle2cells(cells2rle(cells_str) + "!") == cells_str

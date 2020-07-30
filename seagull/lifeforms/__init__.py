@@ -18,8 +18,15 @@ Lifeforms are arranged into categories based on their configurations (excluding 
 
 """
 
-from .static import Box, Seed, Moon, Kite
-from .oscillators import Blinker, Toad, Pulsar, FigureEight, Beacon, Pentadecathlon
+from .static import Box, Seed, Moon, Kite, Eater1, SwitchEngine
+from .oscillators import (
+    Blinker,
+    Toad,
+    Pulsar,
+    FigureEight,
+    Beacon,
+    Pentadecathlon,
+)
 from .gliders import Glider
 from .growers import Unbounded
 from .random import RandomBox
@@ -30,6 +37,8 @@ __all__ = [
     "Seed",
     "Moon",
     "Kite",
+    "Eater1",
+    "SwitchEngine",
     "Blinker",
     "Toad",
     "Pulsar",
