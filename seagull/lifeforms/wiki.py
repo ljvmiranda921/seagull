@@ -81,7 +81,7 @@ def parse_plaintext_layout(plaintext_str: Union[str, list]) -> np.ndarray:
     ----------
     cells_str : Union[str, list]
         Plaintext format lifeform description
-        May be a list of lines in which case no comment lines are allowed
+        May be a list of lines in which case no comment lines are allowed 
 
     Raises
     ------
@@ -187,38 +187,38 @@ def _load_file_of_url(path: str) -> str:
 
 def parse_cells(cells_str: str) -> Lifeform:
     """Parse cell_str, stored in Plaintext format, into Lifeform
+    
+    Plaintext format description: https://conwaylife.com/wiki/Plaintext
 
-        Plaintext format description: https://conwaylife.com/wiki/Plaintext
+    Usage
+    -----
+    You can enter a string directly into the function: 
 
-        Usage
-        -----
-        You can enter a string directly into the function:
+    G = parse_cells(
+        '''!Name: name of the Lifeform
+! some comment
+.O
+..O
+OOO
+'''
+        )
+    # . (dot) for empty cell, O (capital O) for alive cell, no trailing .s
 
-        G = parse_cells(
-            '''!Name: name of the Lifeform
-    ! some comment
-    .O
-    ..O
-    OOO
-    '''
-            )
-        # . (dot) for empty cell, O (capital O) for alive cell, no trailing .s
+    Or you can parse cells immediately from Conway Life's website:
 
-        Or you can parse cells immediately from Conway Life's website:
+    G = parse_cells('http://www.conwaylife.com/patterns/glider.cells')
+    
 
-        G = parse_cells('http://www.conwaylife.com/patterns/glider.cells')
+    Parameters
+    ----------
+    cells_str : str
+        Plaintext format lifeform description
+        May be a filename or a URL to be (down)loaded from        
 
-
-        Parameters
-        ----------
-        cells_str : str
-            Plaintext format lifeform description
-            May be a filename or a URL to be (down)loaded from
-
-        Raises
-        ------
-        ValueError
-            if invalid input provided
+    Raises
+    ------
+    ValueError
+        if invalid input provided
 
     """
     if not cells_str.startswith((".", "0", "!")):
@@ -304,45 +304,45 @@ def rle2cells(rle_str: str) -> str:
 
 def parse_rle(rle_str: str) -> Lifeform:
     """Parse rle_str, stored in RLE format, into Lifeform
+    
+    RLE format description: https://www.conwaylife.com/wiki/Run_Length_Encoded
 
-        RLE format description: https://www.conwaylife.com/wiki/Run_Length_Encoded
+    Usage
+    -----
+    You can enter a string directly into the function: 
 
-        Usage
-        -----
-        You can enter a string directly into the function:
+    G = parse_rle(
+        '''#N Gosper glider gun
+#O Bill Gosper
+#C A true period 30 glider gun.
+#C The first known gun and the first known finite pattern with unbounded growth.
+#C www.conwaylife.com/wiki/index.php?title=Gosper_glider_gun
+x = 36, y = 9, rule = B3/S23
+24bo11b$22bobo11b$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o14b$2o8b
+o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
+'''
+        )
+    
+    Or you can parse rle files immediately from Conway Life's website:
 
-        G = parse_rle(
-            '''#N Gosper glider gun
-    #O Bill Gosper
-    #C A true period 30 glider gun.
-    #C The first known gun and the first known finite pattern with unbounded growth.
-    #C www.conwaylife.com/wiki/index.php?title=Gosper_glider_gun
-    x = 36, y = 9, rule = B3/S23
-    24bo11b$22bobo11b$12b2o6b2o12b2o$11bo3bo4b2o12b2o$2o8bo5bo3b2o14b$2o8b
-    o3bob2o4bobo11b$10bo5bo7bo11b$11bo3bo20b$12b2o!
-    '''
-            )
-
-        Or you can parse rle files immediately from Conway Life's website:
-
-        G = parse_rle('http://www.conwaylife.com/patterns/gosperglidergun.rle')
+    G = parse_rle('http://www.conwaylife.com/patterns/gosperglidergun.rle')
 
 
-        Parameters
-        ----------
-        rle_str : str
-            RLE encoded lifeform description
-            May be a filename or a URL to be (down)loaded from
+    Parameters
+    ----------
+    rle_str : str
+        RLE encoded lifeform description
+        May be a filename or a URL to be (down)loaded from        
 
-        Raises
-        ------
-        ValueError
-            if invalid input provided
+    Raises
+    ------
+    ValueError
+        if invalid input provided
 
-        Notes
-        -----
-            - RLE content after `!` is ignored
-            - header line is currently parsed but not used
+    Notes
+    -----
+        - RLE content after `!` is ignored    
+        - header line is currently parsed but not used
     """
     if not rle_str.startswith(("#", "x")):
         # not a proper .cells line, filename/URL?
