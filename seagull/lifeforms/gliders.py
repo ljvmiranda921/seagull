@@ -16,3 +16,36 @@ class Glider(Lifeform):
     @property
     def layout(self) -> np.ndarray:
         return np.array([[1, 0, 0], [0, 1, 1], [1, 1, 0]])
+
+
+class LightweightSpaceship(Lifeform):
+    def __init__(self):
+        super(LightweightSpaceship, self).__init__()
+
+    @property
+    def layout(self) -> np.ndarray:
+        return np.array(
+            [
+                [0, 1, 0, 0, 1],
+                [1, 0, 0, 0, 0],
+                [1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 0],
+            ]
+        )
+
+
+class MiddleweightSpaceship(Lifeform):
+    def __init__(self):
+        super(MiddleweightSpaceship, self).__init__()
+
+    @property
+    def layout(self) -> np.ndarray:
+        return np.array(
+            [
+                [0, 0, 0, 1, 0, 0],
+                [0, 1, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0],
+                [1, 0, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 0],
+            ]
+        )

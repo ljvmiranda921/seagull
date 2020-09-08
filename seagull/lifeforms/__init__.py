@@ -27,7 +27,11 @@ from .oscillators import (
     Beacon,
     Pentadecathlon,
 )
-from .gliders import Glider
+from .gliders import (
+    Glider,
+    LightweightSpaceship,
+    MiddleweightSpaceship,
+)
 from .growers import Unbounded
 from .random import RandomBox
 from .custom import Custom
