@@ -26,6 +26,7 @@ from .oscillators import (
     FigureEight,
     Beacon,
     Pentadecathlon,
+    ChaCha,
 )
 from .gliders import (
     Glider,
@@ -49,6 +50,7 @@ __all__ = [
     "FigureEight",
     "Beacon",
     "Pentadecathlon",
+    "ChaCha",
     "Glider",
     "Unbounded",
     "RandomBox",
