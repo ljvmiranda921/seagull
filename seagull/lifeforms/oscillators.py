@@ -101,3 +101,20 @@ class Pentadecathlon(Lifeform):
         X[1, 1] = 0
         X[6, 1] = 0
         return X
+
+
+class ChaCha(Lifeform):
+    """A Cha Cha lifeform oscillator"""
+    
+    def ___init___(self):
+        """Initialize the class"""
+        super(ChaCha, self).__init__()
+        
+    @property
+    def layout(self) -> np.ndarray:
+        X = np.zeros((6,8))
+        X[0,4] = 1
+        X[1,2::2] = 1
+        X[2,::2] = 1
+        X += np.rot90(X, 2)
+        return X
