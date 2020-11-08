@@ -12,6 +12,7 @@ Lifeforms are arranged into categories based on their configurations (excluding 
     seagull.lifeforms.gliders
     seagull.lifeforms.growers
     seagull.lifeforms.oscillators
+    seagull.lifeforms.methuselahs
     seagull.lifeforms.random
     seagull.lifeforms.static
 
@@ -33,6 +34,10 @@ from .gliders import (
     LightweightSpaceship,
     MiddleweightSpaceship,
 )
+from .methuselahs import (
+    Century, 
+    Thunderbird,    
+)
 from .growers import Unbounded
 from .random import RandomBox
 from .custom import Custom
@@ -52,6 +57,8 @@ __all__ = [
     "Pentadecathlon",
     "ChaCha",
     "Glider",
+    "Century",
+    "Thunderbird",
     "Unbounded",
     "RandomBox",
     "Custom",
