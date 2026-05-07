@@ -18,7 +18,7 @@ def shannon_entropy(state: np.ndarray) -> float:
     float
         Shannon entropy
     """
-    zero_probs = np.count_nonzero(state) / np.product(state.shape)
+    zero_probs = np.count_nonzero(state) / np.prod(state.shape)
     one_probs = 1 - zero_probs
     return -np.sum(np.log2([zero_probs, one_probs]))
 
@@ -36,4 +36,4 @@ def cell_coverage(state: np.ndarray) -> float:
     float
         Cell coverage
     """
-    return np.sum(state) / np.product(state.shape)
+    return np.sum(state) / np.prod(state.shape)
