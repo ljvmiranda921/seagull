@@ -3,7 +3,7 @@
 bumpversion
 pytest-cov==2.6.1
 codecov
-pytest==3.6.4
+pytest==9.0.3
 flake8==3.5.0
 mypy
 tox
