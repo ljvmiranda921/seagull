@@ -48,6 +48,55 @@ def life_rule(X: np.ndarray, rulestring: str) -> np.ndarray:
     return birth_rule | survival_rule
 
 
+def rps_life_rule(X: np.ndarray, cycle_thresholds: list) -> np.ndarray:
+    """A generalized rock-paper-scissors (RPS) life rule that accepts a rulestring in B/S notation
+
+    An RPS rule is a multistate rule in which states are arranged in a cycle
+    e.g. red->green->blue->red. A red cell which has a certain number, N, of green neighbours
+    becomes green. A green cell with N blue neighbours becomes blue, and so on.
+
+    Parameters
+    ----------
+    X : np.ndarray
+        A three-dimensional array of input board matrices, one for each state. The order of the
+        matrices defines the cyclic ordering of the states.
+    cycle_thresholds : list
+        A list of integers, each of which is a number of appropriately coloured neighbours which
+        will cause a state transition in a cell.
+
+    Returns
+    -------
+    np.ndarray
+        Updated boards after applying the rule
+    """
+    # Compute neighbors matrix for each state.
+    neighbors = np.zeros_like(X, dtype=int)
+    for state in range(len(X)):
+        neighbors[state] = _count_neighbors(X[state])
+
+    updated = np.zeros_like(X)
+    for state in range(len(X)):
+        # A cell cycles into this state if a sufficient number of its
+        # neighbors are in this state.
+        cycles_in = np.logical_and(
+            X[state - 1] == 1, np.isin(neighbors[state], cycle_thresholds)
+        )
+        # Given that it is alive, a cell cycles out of this state if a
+        # sufficient number of its neighbors are in the next state.
+        # It must also be in this state.
+        cycles_out = np.isin(neighbors[(state + 1) % len(X)], cycle_thresholds)
+        # A cell lives in this state in the next generation if it either is alive
+        # and does not cycle out, or it cycles in.
+        alive = np.logical_or(
+            np.logical_and(X[state] == 1, np.logical_not(cycles_out)),
+            cycles_in,
+        )
+
+        updated[state] = alive
+
+    return updated
+
+
 def _parse_rulestring(r: str) -> Tuple[List[int], List[int]]:
     """Parse a rulestring"""
     pattern = re.compile("B([0-8]+)?/S([0-8]+)?")

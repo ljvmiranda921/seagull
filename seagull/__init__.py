@@ -2,11 +2,11 @@
 
 """Seagull"""
 
-from .board import Board
+from .board import Board, MultiStateBoard
 from .simulator import Simulator
 from .rules import *
 
-__all__ = ["Board", "Simulator", "rules"]
+__all__ = ["Board", "MultiStateBoard", "Simulator", "rules"]
 
 __version__ = "1.0.0-beta.4"
 __author__ = "Lester James V. Miranda"
