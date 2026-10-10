@@ -33,10 +33,14 @@ from .gliders import (
     Glider,
     LightweightSpaceship,
     MiddleweightSpaceship,
+    HeavyweightSpaceship,
 )
 from .methuselahs import (
-    Century, 
-    Thunderbird,    
+    Century,
+    Thunderbird,
+    Acorn,
+    Rpentomino,
+    Diehard,
 )
 from .growers import Unbounded
 from .random import RandomBox
@@ -57,8 +61,14 @@ __all__ = [
     "Pentadecathlon",
     "ChaCha",
     "Glider",
+    "LightweightSpaceship",
+    "MiddleweightSpaceship",
+    "HeavyweightSpaceship",
     "Century",
     "Thunderbird",
+    "Acorn",
+    "Rpentomino",
+    "Diehard",
     "Unbounded",
     "RandomBox",
     "Custom",

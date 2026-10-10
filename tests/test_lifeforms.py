@@ -19,6 +19,26 @@ from seagull.lifeforms.wiki import (
     cells2rle,
 )
 
+
+def _place_on_board(layout, size):
+    """Center a lifeform layout on an empty square board of the given size.
+
+    The rules in this module count neighbours with a wrap-around boundary, so
+    the board has to be large enough for the pattern to never touch an edge.
+    """
+    X = np.zeros((size, size))
+    h, w = layout.shape
+    r0, c0 = (size - h) // 2, (size - w) // 2
+    X[r0 : r0 + h, c0 : c0 + w] = layout
+    return X
+
+
+def _live_cells(X):
+    return {
+        (r, c) for r in range(X.shape[0]) for c in range(X.shape[1]) if X[r, c]
+    }
+
+
 all_lifeforms = [
     lf
     for lf in getmembers(sg.lifeforms)
@@ -175,3 +195,64 @@ OO....OOOO..........OO..OO.OOO
 OO..OO.OOO..........OO....OOOO
 ....O...................OO"""
     assert rle2cells(cells2rle(cells_str) + "!") == cells_str
+
+
+def test_heavyweight_spaceship_is_a_period_4_c2_spaceship():
+    """The HWSS travels 2 cells every 4 generations, population unchanged"""
+    lifeform = sg.lifeforms.HeavyweightSpaceship()
+    board = _place_on_board(lifeform.layout, size=60)
+    before = _live_cells(board)
+    for _ in range(8):  # two full periods
+        board = sg.rules.conway_classic(board)
+    after = _live_cells(board)
+    assert len(before) == 13
+    # c/2 means two cells per period, so eight generations shift it by four
+    assert after == {(r, c - 4) for r, c in before}
+
+
+def test_heavyweight_spaceship_shifts_two_cells_per_period():
+    """One period (4 generations) translates the ship by exactly two cells"""
+    lifeform = sg.lifeforms.HeavyweightSpaceship()
+    board = _place_on_board(lifeform.layout, size=60)
+    before = _live_cells(board)
+    for _ in range(4):
+        board = sg.rules.conway_classic(board)
+    after = _live_cells(board)
+    assert len(after) == 13
+    assert after == {(r, c - 2) for r, c in before}
+    assert after != before  # it actually moved
+
+
+def test_diehard_disappears_after_exactly_130_generations():
+    """Diehard vanishes at generation 130 and not a single generation sooner"""
+    lifeform = sg.lifeforms.Diehard()
+    board = _place_on_board(lifeform.layout, size=100)
+    for generation in range(1, 130):
+        board = sg.rules.conway_classic(board)
+        assert np.sum(board) > 0, "died early at generation %d" % generation
+    board = sg.rules.conway_classic(board)
+    assert np.sum(board) == 0, "still alive after 130 generations"
+
+
+def test_acorn_grows_before_stabilizing():
+    """Acorn takes 5206 generations to settle, its growth is pinned here"""
+    lifeform = sg.lifeforms.Acorn()
+    board = _place_on_board(lifeform.layout, size=100)
+    populations = {}
+    for generation in range(1, 51):
+        board = sg.rules.conway_classic(board)
+        if generation in (1, 2, 4, 8, 50):
+            populations[generation] = int(np.sum(board))
+    assert populations == {1: 8, 2: 10, 4: 11, 8: 18, 50: 96}
+
+
+def test_rpentomino_grows_before_stabilizing():
+    """The R-pentomino takes 1103 generations to settle, growth pinned here"""
+    lifeform = sg.lifeforms.Rpentomino()
+    board = _place_on_board(lifeform.layout, size=100)
+    populations = {}
+    for generation in range(1, 51):
+        board = sg.rules.conway_classic(board)
+        if generation in (1, 2, 4, 8, 50):
+            populations[generation] = int(np.sum(board))
+    assert populations == {1: 6, 2: 7, 4: 8, 8: 18, 50: 64}
